@@ -21,7 +21,7 @@ namespace Game_Catalog_Project
         public window()
         {
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
+            //FormBorderStyle = FormBorderStyle.FixedSingle;
             DoubleBuffered = true;
             InitializeComponent();
             PanelsInit();
@@ -99,7 +99,7 @@ namespace Game_Catalog_Project
                     //выбор верного формата фото, нужно без бд. Т.к в БД будет лежать верное значение сразу
 
                     button.BackColor = Color.Transparent;
-                    button.BackgroundImageLayout = ImageLayout.Stretch;
+                    button.BackgroundImageLayout = ImageLayout.Zoom;
                     button.FlatAppearance.BorderSize = 0;
                     button.FlatAppearance.MouseDownBackColor = Color.Transparent;
                     button.FlatAppearance.MouseOverBackColor = Color.Transparent;
@@ -269,7 +269,7 @@ namespace Game_Catalog_Project
             screen.BackgroundImageLayout = ImageLayout.Zoom;
             screen.Margin = new Padding(100, 50, 0, 3);
             screen.Name = "pictureBox2";
-            screen.Size = new Size(600, 415);
+            screen.Size = new Size(600, 400);
             screen.TabIndex = 1;
             screen.TabStop = false;
 
@@ -288,7 +288,6 @@ namespace Game_Catalog_Project
             Label textBox1 = new Label();
             textBox1.Text = character.getBiography();
             textBox1.Font = new Font("Segoe Print", 16.2F, FontStyle.Bold, GraphicsUnit.Point);
-            // textBox1.MaximumSize = new Size(1000, 3200);
             textBox1.AutoSize = true;
             textBox1.MaximumSize = new Size(1000, 2000);
 
@@ -296,9 +295,9 @@ namespace Game_Catalog_Project
             panel.Location = new Point(50, 506);
             panel.Margin = new Padding(50, 3, 3, 3);
             panel.Name = "textBox1";
-            panel.AutoSize = true;
+            panel.Size = new Size(1280, 600);
             panel.MaximumSize = new Size(1183, 2000);
-            panel.AutoScroll = true;
+            //panel.AutoScroll = true;
             panel.BackColor = Color.Transparent;
             panel.ForeColor = Color.White;
             
@@ -368,7 +367,7 @@ namespace Game_Catalog_Project
                 button.Location = new Point(locations[current_index].moveX + 50, locations[current_index].moveY + 50);
                 button.BackgroundImage = new Bitmap(catalogs[i].getIcon());
                 button.BackColor = Color.Transparent;
-                button.BackgroundImageLayout = ImageLayout.Stretch;
+                button.BackgroundImageLayout = ImageLayout.Zoom;
                 button.FlatAppearance.BorderSize = 0;
                 button.FlatAppearance.MouseDownBackColor = Color.Transparent;
                 button.FlatAppearance.MouseOverBackColor = Color.Transparent;
@@ -527,6 +526,7 @@ namespace Game_Catalog_Project
             CharactersPanel.BackColor = Color.White;
             CharactersPanel.BackColor = Color.Transparent;
             CharactersPanel.AutoScroll = true;
+            CharactersPanel.AutoSize = true;
             
 
             characterInfoPanel = new myLayoutPanel();
