@@ -276,7 +276,7 @@ namespace Game_Catalog_Project
             Label label1 = new Label();
             label1.AutoSize = true;
             label1.Location = new Point(880, 483);
-            label1.Margin = new Padding(650, 0, 3, 0);
+            label1.Margin = new Padding(500, 0, 3, 0);
             label1.Name = "label1";
             label1.Size = new Size(50, 20);
             label1.Text = character.getName();
@@ -296,8 +296,8 @@ namespace Game_Catalog_Project
             panel.Margin = new Padding(50, 3, 3, 3);
             panel.Name = "textBox1";
             panel.Size = new Size(1280, 600);
-            panel.MaximumSize = new Size(1183, 2000);
-            //panel.AutoScroll = true;
+            panel.AutoSize = true;
+            panel.MaximumSize = new Size(1280, 2000);
             panel.BackColor = Color.Transparent;
             panel.ForeColor = Color.White;
             
@@ -305,7 +305,7 @@ namespace Game_Catalog_Project
             Label label2 = new Label();
             label2.AutoSize = true;
             label2.Location = new Point(450, 929);
-            label2.Margin = new Padding(100, 5, 3, 0);
+            label2.Margin = new Padding(400, 5, 3, 0);
             label2.Name = "label2";
             label2.Size = new Size(50, 20);
             label2.Text = "Источник: ";
