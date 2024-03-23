@@ -213,6 +213,7 @@ namespace Game_Catalog_Project
             label1.Size = new Size(83, 47);
             label1.TabIndex = 2;
             label1.Text = "Имя";
+            label1.Visible = false;
             // 
             // pictureBox2
             // 
