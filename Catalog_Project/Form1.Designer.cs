@@ -199,7 +199,7 @@ namespace Game_Catalog_Project
             button1.Name = "button1";
             button1.Size = new Size(295, 62);
             button1.TabIndex = 3;
-            button1.Text = "Реплика";
+            button1.Text = "Фраза";
             button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
             // 
