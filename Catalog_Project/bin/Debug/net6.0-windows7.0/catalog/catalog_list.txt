@@ -1,0 +1,4 @@
+catalog\stalker_icon.png stalker game
+catalog\GTA_icon.png gta game
+catalog\Uncharted_icon.png uncharted game
+catalog\film_icon.png films film

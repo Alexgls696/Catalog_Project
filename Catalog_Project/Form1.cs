@@ -559,10 +559,6 @@ namespace Game_Catalog_Project
             filmsCatalogPanel.Visible = true;
             current_panel = filmsCatalogPanel.Name;
         }
-
-        // [DllImport("user32.dll", SetLastError = true)]
-        // private static extern bool LockWindowUpdate(IntPtr hWnd);
-
     }
 }
 
@@ -587,7 +583,6 @@ public partial class myPanel : Panel
         get
         {
             CreateParams cp = base.CreateParams;
-            //cp.ExStyle |= 0x02000000; // WS_CLIPCHILDREN
             cp.ExStyle |= 0x2000000 | 0x02000000;
             return cp;
         }
@@ -600,7 +595,6 @@ public partial class myPanel : Panel
         if ((m.Msg == WM_HSCROLL || m.Msg == WM_VSCROLL)
         && (((int)m.WParam & 0xFFFF) == 5))
         {
-            // Change SB_THUMBTRACK to SB_THUMBPOSITION
             m.WParam = (IntPtr)(((int)m.WParam & ~0xFFFF) | 4);
         }
         base.WndProc(ref m);
@@ -626,7 +620,6 @@ public partial class myLayoutPanel : FlowLayoutPanel
         get
         {
             CreateParams cp = base.CreateParams;
-            //cp.ExStyle |= 0x02000000; // WS_CLIPCHILDREN
             cp.ExStyle |= 0x2000000 | 0x02000000;
             return cp;
         }
@@ -639,7 +632,6 @@ public partial class myLayoutPanel : FlowLayoutPanel
         if ((m.Msg == WM_HSCROLL || m.Msg == WM_VSCROLL)
         && (((int)m.WParam & 0xFFFF) == 5))
         {
-            // Change SB_THUMBTRACK to SB_THUMBPOSITION
             m.WParam = (IntPtr)(((int)m.WParam & ~0xFFFF) | 4);
         }
         base.WndProc(ref m);
