@@ -56,6 +56,8 @@ namespace Game_Catalog_Project
             GamesButton.BackgroundImage = Catalog_Project.Properties.Resources.games_icon;
             GamesButton.BackgroundImageLayout = ImageLayout.Stretch;
             GamesButton.FlatAppearance.BorderSize = 0;
+            GamesButton.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            GamesButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
             GamesButton.FlatStyle = FlatStyle.Flat;
             GamesButton.Location = new Point(220, 103);
             GamesButton.Name = "GamesButton";
@@ -70,6 +72,8 @@ namespace Game_Catalog_Project
             FilmsButton.BackgroundImage = Catalog_Project.Properties.Resources.films_icon;
             FilmsButton.BackgroundImageLayout = ImageLayout.Stretch;
             FilmsButton.FlatAppearance.BorderSize = 0;
+            FilmsButton.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            FilmsButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
             FilmsButton.FlatStyle = FlatStyle.Flat;
             FilmsButton.Location = new Point(706, 374);
             FilmsButton.Name = "FilmsButton";
@@ -120,6 +124,7 @@ namespace Game_Catalog_Project
             backButton.Size = new Size(55, 53);
             backButton.TabIndex = 4;
             backButton.UseVisualStyleBackColor = false;
+            backButton.Visible = false;
             backButton.Click += BackButton_Click;
             // 
             // characterInfoPanel1
@@ -131,7 +136,7 @@ namespace Game_Catalog_Project
             characterInfoPanel1.Controls.Add(label1);
             characterInfoPanel1.Controls.Add(pictureBox2);
             characterInfoPanel1.Controls.Add(pictureBox1);
-            characterInfoPanel1.Location = new Point(1, 70);
+            characterInfoPanel1.Location = new Point(11, 71);
             characterInfoPanel1.MaximumSize = new Size(1260, 720);
             characterInfoPanel1.Name = "characterInfoPanel1";
             characterInfoPanel1.Size = new Size(1260, 635);

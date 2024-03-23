@@ -231,6 +231,8 @@ namespace Game_Catalog_Project
                     name = button.Name;
                 }
             }
+            SearchTextBox.Visible = false;
+            SearchButton.Visible = false;
             //characterInfoPanel.Controls.Clear();
             ShowInfoAboutCharacter(name); //Отображение
         }
@@ -414,11 +416,13 @@ namespace Game_Catalog_Project
                     GamesButton.Visible = true;
                     FilmsButton.Visible = true;
                     gameCatalogPanel.Visible = false;
+                    backButton.Visible = false;
                     current_panel = "Main";
                     break;
                 case "FilmsPanel":
                     GamesButton.Visible = true;
                     FilmsButton.Visible = true;
+                    backButton.Visible = false;
                     filmsCatalogPanel.Visible = false;
                     current_panel = "Main";
                     break;
@@ -437,7 +441,9 @@ namespace Game_Catalog_Project
                     }
                     break;
                 case "CharacterInfo":
+                    SearchTextBox.Visible = true;
                     CharactersPanel.Visible = true;
+                    SearchButton.Visible = true;
                     characterInfoPanel1.Visible = false;
                     current_panel = "characters";
                     last_catalog = last_catalog2;
@@ -483,6 +489,7 @@ namespace Game_Catalog_Project
 
         private void GamesButton_Click(object sender, EventArgs e)
         {
+            backButton.Visible = true;
             GamesButton.Visible = false;
             FilmsButton.Visible = false;
             gameCatalogPanel.Visible = true;
@@ -491,6 +498,7 @@ namespace Game_Catalog_Project
 
         private void FilmsButton_Click(object sender, EventArgs e)
         {
+            backButton.Visible = true;
             GamesButton.Visible = false;
             FilmsButton.Visible = false;
             filmsCatalogPanel.Visible = true;
@@ -580,6 +588,4 @@ public partial class myLayoutPanel : FlowLayoutPanel
         }
         base.WndProc(ref m);
     }
-
-
 }
