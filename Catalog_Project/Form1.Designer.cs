@@ -43,10 +43,9 @@
             GamesButton.BackgroundImageLayout = ImageLayout.Stretch;
             GamesButton.FlatAppearance.BorderSize = 0;
             GamesButton.FlatStyle = FlatStyle.Flat;
-            GamesButton.Location = new Point(245, 101);
-            GamesButton.Margin = new Padding(3, 2, 3, 2);
+            GamesButton.Location = new Point(220, 103);
             GamesButton.Name = "GamesButton";
-            GamesButton.Size = new Size(300, 250);
+            GamesButton.Size = new Size(275, 275);
             GamesButton.TabIndex = 0;
             GamesButton.UseVisualStyleBackColor = false;
             GamesButton.Click += GamesButton_Click;
@@ -58,10 +57,9 @@
             FilmsButton.BackgroundImageLayout = ImageLayout.Stretch;
             FilmsButton.FlatAppearance.BorderSize = 0;
             FilmsButton.FlatStyle = FlatStyle.Flat;
-            FilmsButton.Location = new Point(720, 377);
-            FilmsButton.Margin = new Padding(3, 2, 3, 2);
+            FilmsButton.Location = new Point(706, 374);
             FilmsButton.Name = "FilmsButton";
-            FilmsButton.Size = new Size(300, 250);
+            FilmsButton.Size = new Size(275, 275);
             FilmsButton.TabIndex = 1;
             FilmsButton.UseVisualStyleBackColor = false;
             FilmsButton.Click += FilmsButton_Click;
@@ -69,14 +67,13 @@
             // SearchTextBox
             // 
             SearchTextBox.BackColor = SystemColors.InfoText;
-            SearchTextBox.Font = new Font("Segoe Print", 16.2F, FontStyle.Bold);
+            SearchTextBox.Font = new Font("Segoe Print", 16.2F, FontStyle.Bold, GraphicsUnit.Point);
             SearchTextBox.ForeColor = SystemColors.InactiveBorder;
-            SearchTextBox.Location = new Point(140, 9);
-            SearchTextBox.Margin = new Padding(3, 2, 3, 2);
+            SearchTextBox.Location = new Point(88, 12);
             SearchTextBox.Multiline = true;
             SearchTextBox.Name = "SearchTextBox";
             SearchTextBox.RightToLeft = RightToLeft.No;
-            SearchTextBox.Size = new Size(840, 41);
+            SearchTextBox.Size = new Size(1099, 53);
             SearchTextBox.TabIndex = 2;
             // 
             // SearchButton
@@ -89,10 +86,9 @@
             SearchButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
             SearchButton.FlatStyle = FlatStyle.Flat;
             SearchButton.ForeColor = Color.Transparent;
-            SearchButton.Location = new Point(985, 9);
-            SearchButton.Margin = new Padding(3, 2, 3, 2);
+            SearchButton.Location = new Point(1193, 11);
             SearchButton.Name = "SearchButton";
-            SearchButton.Size = new Size(52, 40);
+            SearchButton.Size = new Size(59, 53);
             SearchButton.TabIndex = 3;
             SearchButton.UseVisualStyleBackColor = false;
             // 
@@ -105,28 +101,23 @@
             backButton.FlatAppearance.MouseDownBackColor = Color.Transparent;
             backButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
             backButton.FlatStyle = FlatStyle.Flat;
-            backButton.Location = new Point(10, 9);
-            backButton.Margin = new Padding(3, 2, 3, 2);
+            backButton.Location = new Point(11, 12);
             backButton.Name = "backButton";
-            backButton.Size = new Size(48, 40);
+            backButton.Size = new Size(55, 53);
             backButton.TabIndex = 4;
             backButton.UseVisualStyleBackColor = false;
             backButton.Click += BackButton_Click;
             // 
             // characterInfoPanel
             // 
-            characterInfoPanel.AutoScroll = true;
-            characterInfoPanel.BackColor = Color.Transparent;
-            characterInfoPanel.Location = new Point(0, 70);
+            characterInfoPanel.Location = new Point(0, 0);
             characterInfoPanel.Name = "characterInfoPanel";
-            characterInfoPanel.Size = new Size(1280, 600);
+            characterInfoPanel.Size = new Size(200, 100);
             characterInfoPanel.TabIndex = 0;
-            characterInfoPanel.Visible = false;
             // 
             // window
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.None;
             BackgroundImage = Catalog_Project.Properties.Resources.background2;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1264, 681);
@@ -136,7 +127,7 @@
             Controls.Add(FilmsButton);
             Controls.Add(GamesButton);
             DoubleBuffered = true;
-            Margin = new Padding(3, 2, 3, 2);
+            MinimumSize = new Size(1280, 720);
             Name = "window";
             ResumeLayout(false);
             PerformLayout();

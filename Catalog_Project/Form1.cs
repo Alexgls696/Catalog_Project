@@ -1,4 +1,5 @@
 using System.Text;
+using System.Windows.Forms;
 
 namespace Game_Catalog_Project
 {
@@ -295,8 +296,9 @@ namespace Game_Catalog_Project
             panel.Location = new Point(50, 506);
             panel.Margin = new Padding(50, 3, 3, 3);
             panel.Name = "textBox1";
-            panel.Size = new Size(1280, 600);
+            panel.MinimumSize = new Size(1280, 600);
             panel.AutoSize = true;
+           // panel.Size = new Size(1280, 200);
             panel.MaximumSize = new Size(1280, 2000);
             panel.BackColor = Color.Transparent;
             panel.ForeColor = Color.White;
@@ -531,7 +533,8 @@ namespace Game_Catalog_Project
 
             characterInfoPanel = new myLayoutPanel();
             characterInfoPanel.Location = new Point(0, 70);
-            characterInfoPanel.Size = new Size(1280, 600);
+            characterInfoPanel.MaximumSize = new Size(1280,720);
+            characterInfoPanel.Size = new Size(1240, 635);
             characterInfoPanel.Name = "CharacterPanel";
             characterInfoPanel.Visible = false;
             characterInfoPanel.BackColor = Color.White;
