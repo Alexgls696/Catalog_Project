@@ -1,23 +1,21 @@
 using System.Text;
-using System.Windows.Forms;
-
 namespace Game_Catalog_Project
 {
-    
+
     public partial class window : Form
     {
-        private bool characters_load = true;
         private myPanel gameCatalogPanel; //каталог игр
         private myPanel filmsCatalogPanel; //каталог фильмов
         private myPanel CharactersPanel; //каталог персонажей в играх или фильмах
-        private myLayoutPanel characterInfoPanel; //Инфа о персонаже
 
         private string current_panel = "";
         private string last_catalog = "";
         private string last_catalog2 = "";
 
         private List<Character> characters = new List<Character>();
-        private List<Catalog>catalogs = new List<Catalog>(); //каталоги игр, фильмов и тд
+        private List<Catalog> catalogs = new List<Catalog>(); //каталоги игр, фильмов и тд
+
+        int current_index = 0;
 
         public window()
         {
@@ -58,17 +56,19 @@ namespace Game_Catalog_Project
 
             string icon = path + "icon.png";
             string screen = path + "screen.jpeg";
-           
+            string sound = path + "sound.mp3";
+
             character.setName(name);
             character.setLink(link);
             character.setBiography(builder.ToString());
             character.setParentName(parent);
             character.setPhoto(icon);
             character.setScreen(screen);
+            character.setSound(sound);
             characters.Add(character);
         }
         public void LoadCharactersFromFile() //Загрузка персов в лист
-            //Здесь должен быть получен файл со списком персонажей из БД.
+                                             //Здесь должен быть получен файл со списком персонажей из БД.
         {
             StreamReader char_reader = new StreamReader("characters/CharactersList.txt");
             while (!char_reader.EndOfStream)
@@ -112,7 +112,7 @@ namespace Game_Catalog_Project
                     button.Click += current_character_panel_click;
                     gameCatalogPanel.Controls.Add(button);
                     moveX += 300;
-                    if ((count+1) % 4 == 0)
+                    if ((count + 1) % 4 == 0)
                     {
                         moveX = 0;
                         moveY += 300;
@@ -231,17 +231,18 @@ namespace Game_Catalog_Project
                     name = button.Name;
                 }
             }
-            characterInfoPanel.Controls.Clear();
+            //characterInfoPanel.Controls.Clear();
             ShowInfoAboutCharacter(name); //Отображение
         }
 
         private void ShowInfoAboutCharacter(string name) //Отображение инфы о персонаже
         {
-            characterInfoPanel.Visible = true;
+            characterInfoPanel1.Location = new Point(0, 70);
+            characterInfoPanel1.Visible = true;
             CharactersPanel.Visible = false;
             Character character = null;
-            int current_index = 0;
-            for(int i = 0; i < characters.Count; i++)
+     
+            for (int i = 0; i < characters.Count; i++)
             {
                 if (characters[i].getName().Equals(name))
                 {
@@ -252,87 +253,31 @@ namespace Game_Catalog_Project
             last_catalog = current_panel;
             current_panel = "CharacterInfo";
 
-            PictureBox icon = new PictureBox();
-            icon.Location = new Point(50, 50);
-            icon.Margin = new Padding(100, 50, 3, 3);
-            icon.BackgroundImage = setCurrentPhoto(character.Photo(), current_index); //выбор верного формата фото, нужно без бд. Т.к в БД будет лежать верное значение сразу
-            icon.BackgroundImageLayout = ImageLayout.Zoom;
-            icon.Name = "pictureBox1";
-            icon.Size = new Size(300, 350);
-            icon.SizeMode = PictureBoxSizeMode.Zoom;
-            icon.TabIndex = 0;
-            icon.TabStop = false;
-
-            PictureBox screen = new PictureBox();
-            screen.Dock = DockStyle.Fill;
-            screen.BackgroundImage = setCurrentScreen(character.Screen(), current_index);
-            screen.Location = new Point(372, 50);
-            screen.BackgroundImageLayout = ImageLayout.Zoom;
-            screen.Margin = new Padding(100, 50, 0, 3);
-            screen.Name = "pictureBox2";
-            screen.Size = new Size(600, 400);
-            screen.TabIndex = 1;
-            screen.TabStop = false;
-
-            Label label1 = new Label();
-            label1.AutoSize = true;
-            label1.Location = new Point(880, 483);
-            label1.Margin = new Padding(500, 0, 3, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(50, 20);
+            pictureBox1.BackgroundImage = setCurrentPhoto(character.Photo(), current_index);
+            pictureBox2.BackgroundImage = setCurrentScreen(character.Screen(), current_index);
             label1.Text = character.getName();
-            label1.Font= new Font("Segoe Print", 22.2F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.ForeColor=Color.White;
+            label1.ForeColor = Color.White;
 
             myPanel panel = new myPanel();
 
-            Label textBox1 = new Label();
-            textBox1.Text = character.getBiography();
-            textBox1.Font = new Font("Segoe Print", 16.2F, FontStyle.Bold, GraphicsUnit.Point);
-            textBox1.AutoSize = true;
-            textBox1.MaximumSize = new Size(1000, 2000);
+            text.Text = character.getBiography();
+            text.Font = new Font("Segoe Print", 16.2F, FontStyle.Bold, GraphicsUnit.Point);
+            text.AutoSize = true;
+            text.MaximumSize = new Size(1000, 2000);
 
-            panel.Controls.Add(textBox1);
             panel.Location = new Point(50, 506);
             panel.Margin = new Padding(50, 3, 3, 3);
             panel.Name = "textBox1";
             panel.MinimumSize = new Size(1280, 600);
             panel.AutoSize = true;
-           // panel.Size = new Size(1280, 200);
+            // panel.Size = new Size(1280, 200);
             panel.MaximumSize = new Size(1280, 2000);
             panel.BackColor = Color.Transparent;
             panel.ForeColor = Color.White;
-            
-            
-            Label label2 = new Label();
-            label2.AutoSize = true;
-            label2.Location = new Point(450, 929);
-            label2.Margin = new Padding(400, 5, 3, 0);
-            label2.Name = "label2";
-            label2.Size = new Size(50, 20);
-            label2.Text = "Источник: ";
-            label2.Font = new Font("Segoe Print", 16.2F, FontStyle.Bold, GraphicsUnit.Point);
-            label2.ForeColor = Color.White;
 
-            Label label3 = new Label();
-            label3.AutoSize = true;
-            label3.Location = new Point(523, 929);
-            label3.Margin = new Padding(20, 5, 3, 0);
-            label3.Name = "label3";
-            label3.Size = new Size(50, 20);
-            label3.TabIndex = 5;
-            label3.Text = character.getLink();
-            label3.Font = new Font("Segoe Print", 14.2F, FontStyle.Bold, GraphicsUnit.Point);
-            label3.ForeColor = Color.Yellow;
-
-            characterInfoPanel.Controls.Add(icon);
-            characterInfoPanel.Controls.Add(screen);
-            characterInfoPanel.Controls.Add(label1);
-            characterInfoPanel.Controls.Add(panel);
-            characterInfoPanel.Controls.Add(label2);
-            characterInfoPanel.Controls.Add(label3);
+            link.Text = character.getLink();
         }
-      
+
 
 
         private struct location //Структура для правильного отображения внутри каталогов
@@ -359,8 +304,8 @@ namespace Game_Catalog_Project
                 switch (catalogs[i].getType())
                 {
                     case "game":
-                        panel = gameCatalogPanel; current_index = 0;  break;
-                       
+                        panel = gameCatalogPanel; current_index = 0; break;
+
                     case "film":
                         panel = filmsCatalogPanel; current_index = 1; break;
                 }
@@ -389,7 +334,7 @@ namespace Game_Catalog_Project
             }
         }
 
-       
+
 
         private void LoadCatalogsFromFile() //Чтение данных из файлов
         {
@@ -398,7 +343,7 @@ namespace Game_Catalog_Project
             string catalog_list = "catalog_list.txt";
             string properties = "";
             List<string> propertiesList = new List<string>(); //строки из файла со списком игр или фильмов
-            StreamReader reader = new StreamReader(folder+"catalog_list.txt");
+            StreamReader reader = new StreamReader(folder + "catalog_list.txt");
             string icon_path = "";
             string parent_name = "";
             string type = "";
@@ -408,7 +353,7 @@ namespace Game_Catalog_Project
 
                 icon_path = properties.Split()[0];
                 parent_name = properties.Split()[1];
-                type= properties.Split()[2];
+                type = properties.Split()[2];
                 Catalog catalog = new Catalog();
                 catalog.setIcon(icon_path);
                 catalog.setName(parent_name);
@@ -434,8 +379,8 @@ namespace Game_Catalog_Project
                 return;
             }
             int moveX = 0;
-            int moveY = 0;    
-            }
+            int moveY = 0;
+        }
         private void CharacterInGamesClick(object? sender, EventArgs e)
         {
             CharactersPanel.Controls.Clear();
@@ -493,7 +438,7 @@ namespace Game_Catalog_Project
                     break;
                 case "CharacterInfo":
                     CharactersPanel.Visible = true;
-                    characterInfoPanel.Visible = false;
+                    characterInfoPanel1.Visible = false;
                     current_panel = "characters";
                     last_catalog = last_catalog2;
                     break;
@@ -529,22 +474,11 @@ namespace Game_Catalog_Project
             CharactersPanel.BackColor = Color.Transparent;
             CharactersPanel.AutoScroll = true;
             CharactersPanel.AutoSize = true;
-            
 
-            characterInfoPanel = new myLayoutPanel();
-            characterInfoPanel.Location = new Point(0, 70);
-            characterInfoPanel.MaximumSize = new Size(1280,720);
-            characterInfoPanel.Size = new Size(1240, 635);
-            characterInfoPanel.Name = "CharacterPanel";
-            characterInfoPanel.Visible = false;
-            characterInfoPanel.BackColor = Color.White;
-            characterInfoPanel.BackColor = Color.Transparent;
-            characterInfoPanel.AutoScroll = true;
 
             Controls.Add(gameCatalogPanel);
             Controls.Add(filmsCatalogPanel);
             Controls.Add(CharactersPanel);
-            Controls.Add(characterInfoPanel);
         }
 
         private void GamesButton_Click(object sender, EventArgs e)
@@ -561,6 +495,13 @@ namespace Game_Catalog_Project
             FilmsButton.Visible = false;
             filmsCatalogPanel.Visible = true;
             current_panel = filmsCatalogPanel.Name;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            WMPLib.WindowsMediaPlayer wplayer = new WMPLib.WindowsMediaPlayer();
+            wplayer.URL = characters[current_index].getSound();
+            wplayer.controls.play();
         }
     }
 }

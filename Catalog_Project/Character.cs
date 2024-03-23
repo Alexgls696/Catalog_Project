@@ -3,6 +3,7 @@ namespace Game_Catalog_Project
 {
     internal class Character
     {
+        private string sound;
         private string photo;
         private string name;
         private string screen;
@@ -10,7 +11,7 @@ namespace Game_Catalog_Project
         private string link;
         private string parent_name; //Название игры или фильма, где находится данный персонаж.
 
-        public Character(string name, string biography, string link, string parent_name, string photo, string screen)
+        public Character(string name, string biography, string link, string parent_name, string photo, string screen, string sound)
         {
             this.photo = photo;
             this.name = name;
@@ -18,11 +19,21 @@ namespace Game_Catalog_Project
             this.biography = biography;
             this.link = link;
             this.parent_name = parent_name;
+            this.sound = sound;
         }
 
         public Character()
         {
             
+        }
+        public string getSound()
+        {
+            return sound;
+        }
+
+        public void setSound(string sound)
+        {
+            this.sound = sound;
         }
 
         public string Photo()
@@ -83,7 +94,5 @@ namespace Game_Catalog_Project
         {
             this.parent_name = parent_name;
         }
-
-        
     }
 }
