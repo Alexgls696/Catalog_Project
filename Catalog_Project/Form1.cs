@@ -8,12 +8,16 @@ namespace Game_Catalog_Project
         private myPanel filmsCatalogPanel; //каталог фильмов
         private myPanel CharactersPanel; //каталог персонажей в играх или фильмах
 
-        private string current_panel = "";
+        private string current_panel = "Main";
         private string last_catalog = "";
         private string last_catalog2 = "";
 
         private List<Character> characters = new List<Character>();
         private List<Catalog> catalogs = new List<Catalog>(); //каталоги игр, фильмов и тд
+
+        private List<Character>search_characters_list = new List<Character>();
+
+        private string search_mode = "";
 
         int current_index = 0;
 
@@ -79,6 +83,7 @@ namespace Game_Catalog_Project
                 char_path = char_path + char_folder + "/";
                 setCharacterInfo(char_path); //передается путь до файла
             }
+            characters = SortCharacters(characters);
             char_reader.Close();
         }
 
@@ -123,7 +128,6 @@ namespace Game_Catalog_Project
                 }
             }
         }
-
         private Bitmap setCurrentPhoto(string Folder, int index)
         //выбор верного формата фото, нужно без бд. Т.к в БД будет лежать верное значение сразу
         {
@@ -233,7 +237,9 @@ namespace Game_Catalog_Project
             }
             SearchTextBox.Visible = false;
             SearchButton.Visible = false;
-            //characterInfoPanel.Controls.Clear();
+            last_catalog2 = last_catalog;
+            last_catalog = current_panel;
+            current_panel = "CharacterInfo";
             ShowInfoAboutCharacter(name); //Отображение
         }
 
@@ -243,45 +249,58 @@ namespace Game_Catalog_Project
             characterInfoPanel1.Visible = true;
             CharactersPanel.Visible = false;
             Character character = null;
-     
+
             for (int i = 0; i < characters.Count; i++)
             {
                 if (characters[i].getName().Equals(name))
                 {
-                    character = characters[i]; current_index = i;  break;
+                    character = characters[i]; current_index = i; break;
                 }
             }
-            last_catalog2 = last_catalog;
-            last_catalog = current_panel;
-            current_panel = "CharacterInfo";
+            
 
             pictureBox1.BackgroundImage = setCurrentPhoto(character.Photo(), current_index);
             pictureBox2.BackgroundImage = setCurrentScreen(character.Screen(), current_index);
             label1.Text = character.getName();
             label1.ForeColor = Color.White;
 
-            myPanel panel = new myPanel();
-
             text.Text = character.getBiography();
             text.Font = new Font("Segoe Print", 16.2F, FontStyle.Bold, GraphicsUnit.Point);
             text.AutoSize = true;
             text.MaximumSize = new Size(1000, 2000);
-
-            panel.Location = new Point(50, 506);
-            panel.Margin = new Padding(50, 3, 3, 3);
-            panel.Name = "textBox1";
-            panel.MinimumSize = new Size(1280, 600);
-            panel.AutoSize = true;
-            // panel.Size = new Size(1280, 200);
-            panel.MaximumSize = new Size(1280, 2000);
-            panel.BackColor = Color.Transparent;
-            panel.ForeColor = Color.White;
-
             link.Text = character.getLink();
         }
 
+        private List<Character> SortCharacters(List<Character> catalog)
+        {
+            
+            for (int i = 0; i < catalog.Count; i++)
+            {
+                for (int j = 0; j < catalog.Count-i-1; j++)
+                {
+                    if (string.Compare(catalog[j].getName(),catalog[j + 1].getName())>0)
+                    {
+                        (catalog[j+1], catalog[j]) = (catalog[j], catalog[j+1]);
+                    }
+                }
+            }
+            return catalog;
+        }
 
-
+        private List<Catalog> SortCatalogs(List<Catalog> catalog)
+        {
+            for (int i = 0; i < catalog.Count-1; i++)
+            {
+                for (int j = 0; j < catalog.Count - i - 1; j++)
+                {
+                    if (string.Compare(catalog[j].getName(), catalog[j + 1].getName()) > 0)
+                    {
+                        (catalog[j + 1], catalog[j]) = (catalog[j], catalog[j + 1]);
+                    }
+                }
+            }
+            return catalog;
+        }
         private struct location //Структура для правильного отображения внутри каталогов
         {
             public int moveX;
@@ -292,7 +311,8 @@ namespace Game_Catalog_Project
                 moveX = 0; moveY = 0; count = 0;
             }
         }
-        public void setCatalogLocation() //Распределяет игры и фильмы в их каталоги, добавить сюда новый каталог в будущем
+
+        private void setCatalogLocation() //Распределяет игры и фильмы в их каталоги, добавить сюда новый каталог в будущем
         {
             int moveX = 0;
             int moveY = 0;
@@ -325,7 +345,7 @@ namespace Game_Catalog_Project
                 button.FlatAppearance.BorderSize = 0;
                 button.UseVisualStyleBackColor = false;
                 button.Name = catalogs[i].getName();
-                button.Click += CharacterInGamesClick;
+                button.Click += CharactersClick;
                 panel.Controls.Add(button);
                 locations[current_index].moveX += 300;
                 if ((locations[current_index].count + 1) % 4 == 0)
@@ -336,19 +356,16 @@ namespace Game_Catalog_Project
             }
         }
 
-
-
         private void LoadCatalogsFromFile() //Чтение данных из файлов
         {
             //Здесь catalog_list должен быть получен из БД
             string folder = "catalog/";
-            string catalog_list = "catalog_list.txt";
-            string properties = "";
+            string properties;
             List<string> propertiesList = new List<string>(); //строки из файла со списком игр или фильмов
             StreamReader reader = new StreamReader(folder + "catalog_list.txt");
-            string icon_path = "";
-            string parent_name = "";
-            string type = "";
+            string icon_path;
+            string parent_name;
+            string type;
             while (!reader.EndOfStream)
             {
                 properties = @reader.ReadLine();
@@ -362,28 +379,9 @@ namespace Game_Catalog_Project
                 catalog.setType(type);
                 catalogs.Add(catalog);
             }
+            catalogs = SortCatalogs(catalogs);
         }
-        private void InitPanelsInformation(string folder, string catalog_list, Panel panel)
-        //Добавление фильмов или игр
-        {
-            string properties = "";
-            List<string> propertiesList = new List<string>(); //строки из файла со списком игр или фильмов
-            StreamReader reader = new StreamReader(folder + catalog_list);
-            propertiesList.Clear();
-            while (!reader.EndOfStream)
-            {
-                properties = reader.ReadLine();
-                propertiesList.Add(properties);
-            }
-            reader.Close();
-            if (propertiesList.Count == 0)
-            {
-                return;
-            }
-            int moveX = 0;
-            int moveY = 0;
-        }
-        private void CharacterInGamesClick(object? sender, EventArgs e)
+        private void CharactersClick(object? sender, EventArgs e)
         {
             CharactersPanel.Controls.Clear();
             Button button = sender as Button;
@@ -410,6 +408,35 @@ namespace Game_Catalog_Project
 
         private void BackButton_Click(object? sender, EventArgs e)
         {
+            switch (search_mode)
+            {
+                case "search":
+                    SearchButton.Visible = true;
+                    SearchTextBox.Visible = true;
+                    switch (current_panel)
+                    {
+                        case "Main":
+                            GamesButton.Visible = true;
+                            FilmsButton.Visible = true;
+                            backButton.Visible = false; characterInfoPanel1.Visible = false; break;
+                        case "GamePanel":
+                            gameCatalogPanel.Visible = true; characterInfoPanel1.Visible = false; break;
+                        case "FilmsPanel":
+                            filmsCatalogPanel.Visible = true; characterInfoPanel1.Visible = false; break;
+                        case "characters":
+                            CharactersPanel.Visible = true; characterInfoPanel1.Visible = false; break;
+                        case "CharacterInfo":
+                            characterInfoPanel1.Visible = true; break;
+                    }
+                    search_mode = "";
+                    SearchPanel.Visible = false;
+                    return;
+                case "Info":
+                    SearchPanel.Visible = true;
+                    characterInfoPanel1.Visible = false;
+                    search_mode = "search";
+                    return;
+            }
             switch (current_panel)
             {
                 case "GamePanel":
@@ -455,7 +482,7 @@ namespace Game_Catalog_Project
         {
             gameCatalogPanel = new myPanel();
             gameCatalogPanel.Location = new Point(0, 70);
-            gameCatalogPanel.Size = new Size(1280, 600);
+            gameCatalogPanel.Size = new Size(1260, 600);
             gameCatalogPanel.Name = "GamePanel";
             gameCatalogPanel.Visible = false;
             gameCatalogPanel.BackColor = Color.White;
@@ -464,7 +491,7 @@ namespace Game_Catalog_Project
 
             filmsCatalogPanel = new myPanel();
             filmsCatalogPanel.Location = new Point(0, 70);
-            filmsCatalogPanel.Size = new Size(1280, 600);
+            filmsCatalogPanel.Size = new Size(1260, 600);
             filmsCatalogPanel.Name = "FilmsPanel";
             filmsCatalogPanel.Visible = false;
             filmsCatalogPanel.BackColor = Color.White;
@@ -473,14 +500,13 @@ namespace Game_Catalog_Project
 
             CharactersPanel = new myPanel();
             CharactersPanel.Location = new Point(0, 70);
-            CharactersPanel.Size = new Size(1280, 600);
+            CharactersPanel.Size = new Size(1260, 600);
             CharactersPanel.Name = "CharacterPanel";
             CharactersPanel.Visible = false;
             CharactersPanel.BackColor = Color.White;
             CharactersPanel.BackColor = Color.Transparent;
             CharactersPanel.AutoScroll = true;
-            CharactersPanel.AutoSize = true;
-
+            //CharactersPanel.AutoSize = true;
 
             Controls.Add(gameCatalogPanel);
             Controls.Add(filmsCatalogPanel);
@@ -505,11 +531,104 @@ namespace Game_Catalog_Project
             current_panel = filmsCatalogPanel.Name;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)//Клик на кнопку воспроизведения звука
         {
             WMPLib.WindowsMediaPlayer wplayer = new WMPLib.WindowsMediaPlayer();
             wplayer.URL = characters[current_index].getSound();
             wplayer.controls.play();
+        }
+
+        private void Search()
+        {
+            string search_str = SearchTextBox.Text;
+            search_characters_list.Clear();
+            SearchPanel.Controls.Clear();
+            SearchPanel.Controls.Add(Results);
+            if( search_str.Length == 0)
+            {
+                return;
+            }
+            int moveX = 0;
+            int moveY = 50;
+            for (int i = 0; i < characters.Count; i++)
+            {
+                if (characters[i].getName().ToLower().Contains(search_str.ToLower()))
+                {
+                    Button button = new Button();
+                    button.Size = new Size(250, 250);
+                    button.Location = new Point(moveX + 50, moveY + 50);
+                    //------------------------------------------------------------------------------------
+                    button.BackgroundImage = setCurrentPhoto(characters[i].Photo(), i);
+                    //выбор верного формата фото, нужно без бд. Т.к в БД будет лежать верное значение сразу
+
+                    button.BackColor = Color.Transparent;
+                    button.BackgroundImageLayout = ImageLayout.Zoom;
+                    button.FlatAppearance.BorderSize = 0;
+                    button.FlatAppearance.MouseDownBackColor = Color.Transparent;
+                    button.FlatAppearance.MouseOverBackColor = Color.Transparent;
+                    button.FlatStyle = FlatStyle.Flat;
+                    button.ForeColor = Color.Transparent;
+                    button.FlatAppearance.BorderSize = 0;
+                    button.UseVisualStyleBackColor = false;
+                    button.Name = characters[i].getName();
+                    button.Click += current_character_in_search_click;
+                    gameCatalogPanel.Controls.Add(button);
+                    moveX += 300;
+                    if ((i + 1) % 4 == 0)
+                    {
+                        moveX = 0;
+                        moveY += 300;
+                    }
+                    Label label = new Label();
+                    SearchPanel.Controls.Add(button);
+                }
+            }
+        }
+
+        private void current_character_in_search_click(object? sender, EventArgs e)
+        {
+            Button button = sender as Button;
+            string name = "";
+            for(int i = 0; i < SearchPanel.Controls.Count; i++)
+            {
+                if (SearchPanel.Controls[i].Equals(button))
+                {
+                    name = button.Name;
+                }
+            }
+            SearchTextBox.Visible = false;
+            SearchButton.Visible = false;
+            SearchPanel.Visible = false;
+            search_mode = "Info";
+            ShowInfoAboutCharacter(name); //Отображение
+        }
+
+        private void SearchButton_Click(object sender, EventArgs e)
+        {
+            search_mode = "search";
+            switch (current_panel)
+            {
+                case "Main":
+                    SearchPanel.Visible = true;
+                    GamesButton.Visible = true;
+                    FilmsButton.Visible = true;
+                    backButton.Visible = true;
+                    characterInfoPanel1.Visible = false; break;
+                case "GamePanel":
+                    gameCatalogPanel.Visible = false;
+                     break;
+                case "FilmsPanel":
+                    filmsCatalogPanel.Visible = false;
+                     break;
+                case "characters":
+                    CharactersPanel.Visible = false;
+                     break;
+                case "CharacterInfo":
+                    characterInfoPanel1.Visible = false;
+                     break;
+            }
+            SearchPanel.Visible = true;
+            Search();
         }
     }
 }
@@ -553,7 +672,7 @@ public partial class myPanel : Panel
     }
 }
 
-public partial class myLayoutPanel : FlowLayoutPanel
+public partial class myLayoutPanel : FlowLayoutPanel //Кастомные панели для фикса прокрутки
 {
     public myLayoutPanel()
     {

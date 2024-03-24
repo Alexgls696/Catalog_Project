@@ -9,6 +9,7 @@ namespace Game_Catalog_Project
         public Catalog() { 
 
         }
+
         public Catalog(string icon, string name, string type)
         {
             this.icon = icon;

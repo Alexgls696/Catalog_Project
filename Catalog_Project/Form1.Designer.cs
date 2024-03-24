@@ -44,10 +44,13 @@ namespace Game_Catalog_Project
             label1 = new Label();
             pictureBox2 = new PictureBox();
             pictureBox1 = new PictureBox();
+            SearchPanel = new myPanel();
+            Results = new Label();
             characterInfoPanel1.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            SearchPanel.SuspendLayout();
             SuspendLayout();
             // 
             // GamesButton
@@ -109,6 +112,7 @@ namespace Game_Catalog_Project
             SearchButton.Size = new Size(59, 53);
             SearchButton.TabIndex = 3;
             SearchButton.UseVisualStyleBackColor = false;
+            SearchButton.Click += SearchButton_Click;
             // 
             // backButton
             // 
@@ -136,7 +140,7 @@ namespace Game_Catalog_Project
             characterInfoPanel1.Controls.Add(label1);
             characterInfoPanel1.Controls.Add(pictureBox2);
             characterInfoPanel1.Controls.Add(pictureBox1);
-            characterInfoPanel1.Location = new Point(11, 71);
+            characterInfoPanel1.Location = new Point(1154, 626);
             characterInfoPanel1.MaximumSize = new Size(1260, 720);
             characterInfoPanel1.Name = "characterInfoPanel1";
             characterInfoPanel1.Size = new Size(1260, 635);
@@ -233,12 +237,35 @@ namespace Game_Catalog_Project
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
+            // SearchPanel
+            // 
+            SearchPanel.BackColor = Color.Transparent;
+            SearchPanel.Controls.Add(Results);
+            SearchPanel.Location = new Point(1, 70);
+            SearchPanel.MinimumSize = new Size(1260, 720);
+            SearchPanel.Name = "SearchPanel";
+            SearchPanel.Size = new Size(1260, 720);
+            SearchPanel.TabIndex = 5;
+            SearchPanel.Visible = false;
+            // 
+            // Results
+            // 
+            Results.AutoSize = true;
+            Results.Font = new Font("Segoe Print", 26.25F, FontStyle.Bold, GraphicsUnit.Point);
+            Results.ForeColor = SystemColors.ControlLightLight;
+            Results.Location = new Point(409, 0);
+            Results.Name = "Results";
+            Results.Size = new Size(400, 62);
+            Results.TabIndex = 0;
+            Results.Text = "Результаты поиска";
+            // 
             // window
             // 
             AutoScaleMode = AutoScaleMode.None;
             BackgroundImage = Catalog_Project.Properties.Resources.background2;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1264, 738);
+            Controls.Add(SearchPanel);
             Controls.Add(characterInfoPanel1);
             Controls.Add(backButton);
             Controls.Add(SearchButton);
@@ -254,6 +281,8 @@ namespace Game_Catalog_Project
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            SearchPanel.ResumeLayout(false);
+            SearchPanel.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -273,5 +302,7 @@ namespace Game_Catalog_Project
         private myPanel characterInfoPanel1;
         private Label link;
         private Label ist;
+        private myPanel SearchPanel;
+        private Label Results;
     }
 }

@@ -22,6 +22,17 @@ namespace Game_Catalog_Project
             this.sound = sound;
         }
 
+        public Character(Character another)
+        {
+            photo=another.photo;
+            name=another.name;
+            screen=another.screen;
+            biography=another.biography;
+            link=another.link;
+            sound=another.sound;
+            parent_name=another.parent_name;
+        }
+
         public Character()
         {
             
