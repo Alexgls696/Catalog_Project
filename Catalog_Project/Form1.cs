@@ -1,4 +1,9 @@
+using Microsoft.VisualBasic.Logging;
+using Microsoft.Data.Sqlite;
 using System.Text;
+using System.Xml.Linq;
+using System.Collections.Generic;
+
 namespace Game_Catalog_Project
 {
 
@@ -15,7 +20,7 @@ namespace Game_Catalog_Project
         private List<Character> characters = new List<Character>();
         private List<Catalog> catalogs = new List<Catalog>(); //каталоги игр, фильмов и тд
 
-        private List<Character>search_characters_list = new List<Character>();
+        private List<Character> search_characters_list = new List<Character>();
 
         private string search_mode = "";
 
@@ -74,17 +79,29 @@ namespace Game_Catalog_Project
         public void LoadCharactersFromFile() //Загрузка персов в лист
                                              //Здесь должен быть получен файл со списком персонажей из БД.
         {
-            StreamReader char_reader = new StreamReader("characters/CharactersList.txt");
-            while (!char_reader.EndOfStream)
+            string connectionString = @"Data Source=usersdata.db";
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
             {
-                string char_folder = "";
-                string char_path = "characters/";
-                char_folder = char_reader.ReadLine();
-                char_path = char_path + char_folder + "/";
-                setCharacterInfo(char_path); //передается путь до файла
+                connection.Open();
+                string sql = "SELECT Characters.Name, Characters.Link, Characters.Biography, Characters.Photo_path, Characters.Screen, GamesFilms.Name, Characters.Sound FROM Characters JOIN GamesFilms ON GamesFilms.id = Characters.GamesFilms_id;";
+                SqliteCommand command = new SqliteCommand(sql, connection);
+                SqliteDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+
+                    string name = reader.GetString(0);
+                    string link = reader.GetString(1);
+                    string biography = reader.GetString(2);
+                    string photo_path = reader.GetString(3);
+                    string screen = reader.GetString(4);
+                    string parent_name = reader.GetString(5);
+                    string sound = reader.GetString(6);
+                    Character character = new Character(name, biography, link, parent_name, photo_path, screen, sound);
+                    characters.Add(character);
+                }
+                connection.Close();
             }
-            characters = SortCharacters(characters);
-            char_reader.Close();
         }
 
         void addCharactersToThePanel(string parent) //Добавляет персонажей на панель
@@ -257,7 +274,7 @@ namespace Game_Catalog_Project
                     character = characters[i]; current_index = i; break;
                 }
             }
-            
+
 
             pictureBox1.BackgroundImage = setCurrentPhoto(character.Photo(), current_index);
             pictureBox2.BackgroundImage = setCurrentScreen(character.Screen(), current_index);
@@ -273,14 +290,14 @@ namespace Game_Catalog_Project
 
         private List<Character> SortCharacters(List<Character> catalog)
         {
-            
+
             for (int i = 0; i < catalog.Count; i++)
             {
-                for (int j = 0; j < catalog.Count-i-1; j++)
+                for (int j = 0; j < catalog.Count - i - 1; j++)
                 {
-                    if (string.Compare(catalog[j].getName(),catalog[j + 1].getName())>0)
+                    if (string.Compare(catalog[j].getName(), catalog[j + 1].getName()) > 0)
                     {
-                        (catalog[j+1], catalog[j]) = (catalog[j], catalog[j+1]);
+                        (catalog[j + 1], catalog[j]) = (catalog[j], catalog[j + 1]);
                     }
                 }
             }
@@ -289,7 +306,7 @@ namespace Game_Catalog_Project
 
         private List<Catalog> SortCatalogs(List<Catalog> catalog)
         {
-            for (int i = 0; i < catalog.Count-1; i++)
+            for (int i = 0; i < catalog.Count - 1; i++)
             {
                 for (int j = 0; j < catalog.Count - i - 1; j++)
                 {
@@ -358,28 +375,25 @@ namespace Game_Catalog_Project
 
         private void LoadCatalogsFromFile() //Чтение данных из файлов
         {
-            //Здесь catalog_list должен быть получен из БД
-            string folder = "catalog/";
-            string properties;
-            List<string> propertiesList = new List<string>(); //строки из файла со списком игр или фильмов
-            StreamReader reader = new StreamReader(folder + "catalog_list.txt");
-            string icon_path;
-            string parent_name;
-            string type;
-            while (!reader.EndOfStream)
+            string connectionString = @"Data Source=usersdata.db";
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
             {
-                properties = @reader.ReadLine();
+                connection.Open();
+                string sql = "SELECT GamesFilms.Name, GamesFilms.Icon_path, Types.Name FROM GamesFilms JOIN Types ON Types._id = GamesFilms.Type_id;";
+                SqliteCommand command = new SqliteCommand(sql, connection);
+                SqliteDataReader reader = command.ExecuteReader();
 
-                icon_path = properties.Split()[0];
-                parent_name = properties.Split()[1];
-                type = properties.Split()[2];
-                Catalog catalog = new Catalog();
-                catalog.setIcon(icon_path);
-                catalog.setName(parent_name);
-                catalog.setType(type);
-                catalogs.Add(catalog);
+                while (reader.Read())
+                {
+                    string name = reader.GetString(0);
+                    string icon_path = reader.GetString(1);
+                    string type = reader.GetString(2);
+
+                    Catalog game = new Catalog(icon_path, name, type);
+                    catalogs.Add(game);
+                }
+                connection.Close();
             }
-            catalogs = SortCatalogs(catalogs);
         }
         private void CharactersClick(object? sender, EventArgs e)
         {
@@ -416,6 +430,7 @@ namespace Game_Catalog_Project
                     switch (current_panel)
                     {
                         case "Main":
+                            button2.Visible = true;
                             GamesButton.Visible = true;
                             FilmsButton.Visible = true;
                             backButton.Visible = false; characterInfoPanel1.Visible = false; break;
@@ -445,6 +460,7 @@ namespace Game_Catalog_Project
                     gameCatalogPanel.Visible = false;
                     backButton.Visible = false;
                     current_panel = "Main";
+                    button2.Visible = true;
                     break;
                 case "FilmsPanel":
                     GamesButton.Visible = true;
@@ -452,6 +468,7 @@ namespace Game_Catalog_Project
                     backButton.Visible = false;
                     filmsCatalogPanel.Visible = false;
                     current_panel = "Main";
+                    button2.Visible = true;
                     break;
                 case "characters":
                     if (last_catalog.Equals("GamePanel"))
@@ -519,6 +536,7 @@ namespace Game_Catalog_Project
             GamesButton.Visible = false;
             FilmsButton.Visible = false;
             gameCatalogPanel.Visible = true;
+            button2.Visible = false;
             current_panel = gameCatalogPanel.Name;
         }
 
@@ -528,6 +546,7 @@ namespace Game_Catalog_Project
             GamesButton.Visible = false;
             FilmsButton.Visible = false;
             filmsCatalogPanel.Visible = true;
+            button2.Visible = false;
             current_panel = filmsCatalogPanel.Name;
         }
 
@@ -544,7 +563,7 @@ namespace Game_Catalog_Project
             search_characters_list.Clear();
             SearchPanel.Controls.Clear();
             SearchPanel.Controls.Add(Results);
-            if( search_str.Length == 0)
+            if (search_str.Length == 0)
             {
                 return;
             }
@@ -589,7 +608,7 @@ namespace Game_Catalog_Project
         {
             Button button = sender as Button;
             string name = "";
-            for(int i = 0; i < SearchPanel.Controls.Count; i++)
+            for (int i = 0; i < SearchPanel.Controls.Count; i++)
             {
                 if (SearchPanel.Controls[i].Equals(button))
                 {
@@ -606,6 +625,7 @@ namespace Game_Catalog_Project
         private void SearchButton_Click(object sender, EventArgs e)
         {
             search_mode = "search";
+            button2.Visible = false;
             switch (current_panel)
             {
                 case "Main":
@@ -616,26 +636,499 @@ namespace Game_Catalog_Project
                     characterInfoPanel1.Visible = false; break;
                 case "GamePanel":
                     gameCatalogPanel.Visible = false;
-                     break;
+                    break;
                 case "FilmsPanel":
                     filmsCatalogPanel.Visible = false;
-                     break;
+                    break;
                 case "characters":
                     CharactersPanel.Visible = false;
-                     break;
+                    break;
                 case "CharacterInfo":
                     characterInfoPanel1.Visible = false;
-                     break;
+                    break;
             }
             SearchPanel.Visible = true;
             Search();
+        }
+
+        //
+        //
+        // Административаня панель
+        //
+        //
+
+        private int selected_button = 1;
+        private int count_found;
+        private bool is_found_logo = false;
+        private string directoryPathPhoto = " ";
+        private string directoryPathScreenshot = " ";
+        private string directoryPathMusic = " ";
+        private string directoryPathLogo = " ";
+        private bool is_authorized = false;
+
+        private void menu_game_button_MouseEnter(object sender, EventArgs e)
+        {
+            menu_game_button.ImageLocation = "dev_panel/menu_gf_button_on.png";
+        }
+
+        private void menu_game_button_MouseLeave(object sender, EventArgs e)
+        {
+            if (selected_button != 1)
+                menu_game_button.ImageLocation = "dev_panel/menu_gf_button.png";
+        }
+
+        private void menu_game_button_Click(object sender, EventArgs e)
+        {
+            restart_panel();
+            add_button.Visible = true;
+            panel_gf.Visible = true;
+            selected_button = 1;
+            restart_button();
+            menu_game_button.ImageLocation = "dev_panel/menu_gf_button_on.png";
+            label_dev.Text = "Добавление игры или фильма";
+        }
+        private void restart_button()
+        {
+            menu_game_button.ImageLocation = "dev_panel/menu_gf_button.png";
+            menu_pers_button.ImageLocation = "dev_panel/menu_pers_button.png";
+            menu_del_button.ImageLocation = "dev_panel/menu_del_button.png";
+        }
+
+        private void fiil_combobox_choise()
+        {
+            cb_choise.Items.Clear();
+            List<Catalog> characters = new List<Catalog>();
+            get_db_gf(characters);
+            foreach (Catalog c in characters)
+            {
+                cb_choise.Items.Add(c.getName());
+            }
+        }
+
+        private void menu_pers_button_Click(object sender, EventArgs e)
+        {
+            restart_panel();
+            add_button.Visible = true;
+            fiil_combobox_choise();
+            panel_pers.Visible = true;
+            selected_button = 2;
+            restart_button();
+            menu_pers_button.ImageLocation = "dev_panel/menu_pers_button_on.png";
+            label_dev.Text = "Добавление персонажа";
+        }
+
+        private void menu_del_button_MouseEnter(object sender, EventArgs e)
+        {
+            menu_del_button.ImageLocation = "dev_panel/menu_del_button_on.png";
+        }
+
+        private void menu_del_button_MouseLeave(object sender, EventArgs e)
+        {
+            if (selected_button != 3)
+                menu_del_button.ImageLocation = "dev_panel/menu_del_button.png";
+        }
+
+        private void menu_del_button_Click(object sender, EventArgs e)
+        {
+            restart_panel();
+            panel_del.Visible = true;
+            selected_button = 3;
+            restart_button();
+            add_button.Visible = false;
+            menu_del_button.ImageLocation = "dev_panel/menu_del_button_on.png";
+            label_dev.Text = "Удаление из базы данных";
+        }
+
+        private void search_Click(object sender, EventArgs e)
+        {
+            count_found = 0;
+            string fileName = "icon/" + textBox_file.Text;
+            string[] imageExtensions = { ".jpg", ".jpeg", ".png", ".gif", ".bmp" };
+            bool is_photo = false; ;
+            foreach (string extension in imageExtensions)
+            {
+                if (File.Exists(fileName + extension))
+                {
+                    count_found++;
+                    label_photo.Text = "Файл для фото найден";
+                    check_photo.ImageLocation = "dev_panel/okey.png";
+                    is_photo = true;
+                    directoryPathPhoto = fileName + extension;
+                    break;
+                }
+            }
+            if (!is_photo)
+            {
+                label_photo.Text = "Файл для фото не найден";
+                check_photo.ImageLocation = "dev_panel/bad.png";
+            }
+
+            string fileName2 = "screenshot/" + textBox_file.Text;
+            string[] imageExtensions2 = { ".jpg", ".jpeg", ".png", ".gif", ".bmp" };
+            bool is_photo2 = false;
+            foreach (string extension2 in imageExtensions2)
+            {
+                if (File.Exists(fileName2 + extension2))
+                {
+                    count_found++;
+                    label_screenshot.Text = "Файл для скриншота найден";
+                    check_screenshot.ImageLocation = "dev_panel/okey.png";
+                    is_photo2 = true;
+                    directoryPathScreenshot = fileName2 + extension2;
+                    break;
+                }
+            }
+            if (!is_photo2)
+            {
+                label_screenshot.Text = "Файл для скриншота не найден";
+                check_screenshot.ImageLocation = "dev_panel/bad.png";
+            }
+
+            string fileName3 = "music/" + textBox_file.Text;
+            string[] musicExtensions = { ".mp3", ".wav", ".ogg", ".flac" };
+            bool fileExists = false;
+            foreach (string extension in musicExtensions)
+            {
+                if (File.Exists(fileName3 + extension))
+                {
+                    count_found++;
+                    fileExists = true;
+                    label_sound.Text = "Файл для звука найден";
+                    check_music.ImageLocation = "dev_panel/okey.png";
+                    directoryPathMusic = fileName3 + extension;
+                    break;
+                }
+            }
+            if (!fileExists)
+            {
+                label_sound.Text = "Файл для звука не найден";
+                check_music.ImageLocation = "dev_panel/bad.png";
+            }
+
+        }
+
+        private void search_MouseEnter_1(object sender, EventArgs e)
+        {
+            search.ImageLocation = "dev_panel/search_on.png";
+        }
+
+        private void search_MouseLeave_1(object sender, EventArgs e)
+        {
+            search.ImageLocation = "dev_panel/search.png";
+        }
+
+        private void add_button_MouseEnter(object sender, EventArgs e)
+        {
+            add_button.ImageLocation = "dev_panel/add_on.png";
+        }
+
+        private void add_button_MouseLeave(object sender, EventArgs e)
+        {
+            add_button.ImageLocation = "dev_panel/add.png";
+        }
+
+        private void add_button_Click(object sender, EventArgs e)
+        {
+            if (selected_button == 2)
+            {
+                if ((textBox_name.Text != String.Empty) && ((textBox_about.Text != String.Empty)) && (textBox_src.Text != String.Empty) && (textBox_file.Text != String.Empty) && (count_found == 3))
+                {
+                    Character C = new Character(textBox_name.Text, textBox_about.Text, textBox_src.Text, cb_choise.Text, directoryPathPhoto, directoryPathScreenshot, directoryPathMusic);
+                    send_db_pers(C);
+                    clear_add_pers_panel();
+                }
+            }
+            else if (selected_button == 1)
+            {
+                if ((textBox_name_gf.Text != String.Empty) && ((cb_gf.Text == "Игры") || (cb_gf.Text == "Фильмы")) && (is_found_logo))
+                {
+                    Catalog catalog = new Catalog(directoryPathLogo, textBox_name_gf.Text, cb_gf.Text);
+                    send_db_gf(catalog);
+                    clear_add_gf_panel();
+                }
+            }
+
+        }
+        private void clear_add_pers_panel()
+        {
+            textBox_name.Text = String.Empty;
+            textBox_about.Text = String.Empty;
+            textBox_file.Text = String.Empty;
+            textBox_src.Text = String.Empty;
+            check_music.ImageLocation = "dev_panel/bad.png";
+            check_photo.ImageLocation = "dev_panel/bad.png";
+            check_screenshot.ImageLocation = "dev_panel/bad.png";
+            label_photo.Text = "Файл для фото не найден";
+            label_sound.Text = "Файл для звука не найден";
+            label_screenshot.Text = "Файл для скриншота не найден";
+            count_found = 0;
+        }
+
+        private void clear_add_gf_panel()
+        {
+            textBox_name_gf.Text = String.Empty;
+            cb_gf.Text = String.Empty;
+            textBox_logo.Text = String.Empty;
+            pictureBox_logo.ImageLocation = "dev_panel/bad.png";
+            label_logo.Text = "Файл для логотипа не найден";
+            is_found_logo = false;
+
+        }
+
+        void send_db_gf(Catalog C)
+        {
+            string name = C.getName();
+            int index_type = (cb_gf.Text == "Игры") ? 1 : 2;
+            string icon = C.getIcon();
+            string connectionString = @"Data Source=usersdata.db";
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+                string sql1 = $"INSERT INTO GamesFilms (Name, Icon_path, Type_id) VALUES ('{name}', '{icon}', {index_type})";
+                SqliteCommand command = new SqliteCommand(sql1, connection);
+                int result = command.ExecuteNonQuery();
+                Console.WriteLine(result.ToString());
+                connection.Close();
+            }
+        }
+
+        private void send_db_pers(Character C)
+        {
+            string name = C.getName();
+            string link = C.getLink();
+            string bio = C.getBiography();
+            int index_df = GetIdByName(C.getParentName());
+            string photo = C.Photo();
+            string screen = C.Screen();
+            string sound = C.getSound();
+            string connectionString = @"Data Source=usersdata.db";
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+                string sql1 = $"INSERT INTO Characters (Name, Link, Biography, GamesFilms_id, Photo_path, Screen, Sound) VALUES ('{name}', '{link}', '{bio}', {index_df}, '{photo}', '{screen}', '{sound}')";
+                SqliteCommand command = new SqliteCommand(sql1, connection);
+                int result = command.ExecuteNonQuery();
+                Console.WriteLine(result.ToString());
+                connection.Close();
+            }
+        }
+
+        private void get_db_gf(List<Catalog> catalogs)
+        {
+            string connectionString = @"Data Source=usersdata.db";
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+                string sql = "SELECT GamesFilms.Name, GamesFilms.Icon_path, Types.Name FROM GamesFilms JOIN Types ON Types._id = GamesFilms.Type_id;";
+                SqliteCommand command = new SqliteCommand(sql, connection);
+                SqliteDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    string name = reader.GetString(0);
+                    string icon_path = reader.GetString(1);
+                    string type = reader.GetString(2);
+                    Catalog game = new Catalog(icon_path, name, type);
+                    catalogs.Add(game);
+                }
+                connection.Close();
+            }
+        }
+
+        private void restart_panel()
+        {
+            panel_pers.Visible = false;
+            panel_gf.Visible = false;
+            panel_del.Visible = false;
+        }
+
+        private void search_gf_MouseEnter(object sender, EventArgs e)
+        {
+            search_gf.ImageLocation = "dev_panel/search_on.png";
+        }
+
+        private void search_gf_MouseLeave(object sender, EventArgs e)
+        {
+            search_gf.ImageLocation = "dev_panel/search.png";
+        }
+
+        private void search_gf_Click(object sender, EventArgs e)
+        {
+            string fileName = "logo/" + textBox_logo.Text;
+            string[] imageExtensions = { ".jpg", ".jpeg", ".png", ".gif", ".bmp" };
+            foreach (string extension in imageExtensions)
+            {
+                if (File.Exists(fileName + extension))
+                {
+                    directoryPathLogo = fileName + extension;
+                    is_found_logo = true;
+                    label_logo.Text = "Файл для логотипа найден";
+                    pictureBox_logo.ImageLocation = "dev_panel/okey.png";
+                    return;
+                }
+            }
+            is_found_logo = false;
+            label_logo.Text = "Файл для логотипа не найден";
+            pictureBox_logo.ImageLocation = "dev_panel/bad.png";
+        }
+
+        private void menu_pers_button_MouseEnter(object sender, EventArgs e)
+        {
+            restart_panel();
+            if (is_authorized)
+            {
+                panel_sign.Visible = false;
+            }
+            else
+            {
+                panel_sign.Visible = true;
+            }
+            panel_gf.Visible = true;
+        }
+
+        public int GetIdByName(string name)
+        {
+            string connectionString = "Data Source=usersdata.db;";
+            int id = -1;
+
+            using (var connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+
+                string query = "SELECT id FROM GamesFilms WHERE Name = @Name";
+
+                using (var command = new SqliteCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Name", name);
+
+                    var reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        id = Convert.ToInt32(reader["id"]);
+                    }
+                }
+            }
+
+            return id;
+        }
+
+        private void sign_in_MouseEnter(object sender, EventArgs e)
+        {
+            sign_in.ImageLocation = "dev_panel/signin_on.png";
+        }
+
+        private void sign_in_MouseLeave(object sender, EventArgs e)
+        {
+            sign_in.ImageLocation = "dev_panel/signin.png";
+        }
+
+        private void sign_in_Click(object sender, EventArgs e)
+        {
+            string[] lines = File.ReadAllLines("login.txt");
+            if ((lines[0] == login.Text) && (lines[1] == password.Text))
+            {
+                is_authorized = true;
+                panel_sign.Visible = false;
+            }
+        }
+
+        private void pictureBox2_MouseEnter(object sender, EventArgs e)
+        {
+            menu_pers_button.ImageLocation = "dev_panel/menu_pers_button_on.png";
+        }
+
+        private void pictureBox2_MouseLeave(object sender, EventArgs e)
+        {
+            if (selected_button != 2)
+                menu_pers_button.ImageLocation = "dev_panel/menu_pers_button.png";
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            restart_panel();
+            dev_panel.Visible = true;
+            button2.Visible = false;
+            if (is_authorized)
+            {
+                panel_sign.Visible = false;
+            }
+            else
+            {
+                panel_sign.Visible = true;
+            }
+            panel_gf.Visible = true;
+        }
+
+        private void DeleteFromCharacters(string name)
+        {
+
+            string connectionString = @"Data Source=usersdata.db";
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+                string sql1 = $"DELETE FROM Characters WHERE Name = '{name}'";
+                SqliteCommand command = new SqliteCommand(sql1, connection);
+                int result = command.ExecuteNonQuery();
+                Console.WriteLine(result.ToString());
+                connection.Close();
+            }
+        }
+
+        private void DeleteFromCatalog(string name)
+        {
+            string connectionString = @"Data Source=usersdata.db";
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+                string sql1 = $"DELETE FROM GamesFilms WHERE Name = '{name}'";
+                SqliteCommand command = new SqliteCommand(sql1, connection);
+                int result = command.ExecuteNonQuery();
+                Console.WriteLine(result.ToString());
+                connection.Close();
+            }
+        }
+
+        private void pictureBox5_Click(object sender, EventArgs e)
+        {
+            dev_panel.Visible = false;
+        }
+
+        private void pictureBox4_Click(object sender, EventArgs e)
+        {
+            if (textBox1.Text != String.Empty)
+            {
+                if (comboBox1.Text == "Каталог")
+                {
+                    DeleteFromCatalog(textBox1.Text);
+                }
+                else
+                {
+                    DeleteFromCharacters(textBox1.Text);
+                }
+            }
+        }
+
+        private void pictureBox4_MouseEnter(object sender, EventArgs e)
+        {
+            pictureBox4.ImageLocation = "dev_panel/search_on.png";
+        }
+
+        private void pictureBox4_MouseLeave(object sender, EventArgs e)
+        {
+            pictureBox4.ImageLocation = "dev_panel/search.png";
+        }
+
+        private void pictureBox3_Click(object sender, EventArgs e)
+        {
+            button2.Visible = true;
+            dev_panel.Visible = false;
         }
     }
 }
 
 
 //Фикс панелей от мерцания при прокрутке
-public partial class myPanel : Panel 
+public partial class myPanel : Panel
 {
     public myPanel()
     {
@@ -681,7 +1174,7 @@ public partial class myLayoutPanel : FlowLayoutPanel //Кастомные панели для фикс
         SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
         UpdateStyles();
     }
-   protected override void OnScroll(ScrollEventArgs se)
+    protected override void OnScroll(ScrollEventArgs se)
     {
         Invalidate();
         base.OnScroll(se);

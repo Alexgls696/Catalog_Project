@@ -14,6 +14,7 @@ namespace Game_Catalog_Project
         {
             this.icon = icon;
             this.name = name;
+            this.type = type;
         }
 
         public void setType(string type)
