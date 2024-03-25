@@ -274,8 +274,6 @@ namespace Game_Catalog_Project
                     character = characters[i]; current_index = i; break;
                 }
             }
-
-
             pictureBox1.BackgroundImage = setCurrentPhoto(character.Photo(), current_index);
             pictureBox2.BackgroundImage = setCurrentScreen(character.Screen(), current_index);
             label1.Text = character.getName();
@@ -624,6 +622,8 @@ namespace Game_Catalog_Project
 
         private void SearchButton_Click(object sender, EventArgs e)
         {
+            SearchPanel.Location = new Point(0, 70);
+            SearchPanel.Visible = true;
             search_mode = "search";
             button2.Visible = false;
             switch (current_panel)
@@ -1046,7 +1046,10 @@ namespace Game_Catalog_Project
         private void button2_Click(object sender, EventArgs e)
         {
             restart_panel();
+            panel_sign.Location = new Point(0, 0);
+            dev_panel.Location=new Point(0, 0);
             dev_panel.Visible = true;
+            panel_sign.Visible = true;
             button2.Visible = false;
             if (is_authorized)
             {
@@ -1091,6 +1094,7 @@ namespace Game_Catalog_Project
         private void pictureBox5_Click(object sender, EventArgs e)
         {
             dev_panel.Visible = false;
+            button2.Visible = true;
         }
 
         private void pictureBox4_Click(object sender, EventArgs e)
@@ -1122,6 +1126,7 @@ namespace Game_Catalog_Project
         {
             button2.Visible = true;
             dev_panel.Visible = false;
+            panel_sign.Visible = false;
         }
     }
 }

@@ -30,7 +30,6 @@ namespace Game_Catalog_Project
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(window));
             GamesButton = new Button();
             FilmsButton = new Button();
             SearchTextBox = new TextBox();
@@ -47,13 +46,13 @@ namespace Game_Catalog_Project
             pictureBox1 = new PictureBox();
             SearchPanel = new myPanel();
             Results = new Label();
-            dev_panel = new Panel();
             panel_sign = new Panel();
             pictureBox3 = new PictureBox();
             sign_in = new PictureBox();
             password = new TextBox();
             login = new TextBox();
             pictureBox5 = new PictureBox();
+            dev_panel = new Panel();
             add_button = new PictureBox();
             label_dev = new Label();
             menu_del_button = new PictureBox();
@@ -101,11 +100,11 @@ namespace Game_Catalog_Project
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SearchPanel.SuspendLayout();
-            dev_panel.SuspendLayout();
             panel_sign.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)sign_in).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
+            dev_panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)add_button).BeginInit();
             ((System.ComponentModel.ISupportInitialize)menu_del_button).BeginInit();
             ((System.ComponentModel.ISupportInitialize)menu_pers_button).BeginInit();
@@ -209,7 +208,7 @@ namespace Game_Catalog_Project
             characterInfoPanel1.Controls.Add(label1);
             characterInfoPanel1.Controls.Add(pictureBox2);
             characterInfoPanel1.Controls.Add(pictureBox1);
-            characterInfoPanel1.Location = new Point(1154, 626);
+            characterInfoPanel1.Location = new Point(1258, 11);
             characterInfoPanel1.MaximumSize = new Size(1260, 720);
             characterInfoPanel1.Name = "characterInfoPanel1";
             characterInfoPanel1.Size = new Size(1260, 635);
@@ -310,7 +309,7 @@ namespace Game_Catalog_Project
             // 
             SearchPanel.BackColor = Color.Transparent;
             SearchPanel.Controls.Add(Results);
-            SearchPanel.Location = new Point(11, 71);
+            SearchPanel.Location = new Point(4, 71);
             SearchPanel.MinimumSize = new Size(1260, 720);
             SearchPanel.Name = "SearchPanel";
             SearchPanel.Size = new Size(1260, 720);
@@ -328,41 +327,24 @@ namespace Game_Catalog_Project
             Results.TabIndex = 0;
             Results.Text = "Результаты поиска";
             // 
-            // dev_panel
-            // 
-            dev_panel.BackgroundImage = (Image)resources.GetObject("dev_panel.BackgroundImage");
-            dev_panel.Controls.Add(panel_sign);
-            dev_panel.Controls.Add(pictureBox5);
-            dev_panel.Controls.Add(add_button);
-            dev_panel.Controls.Add(label_dev);
-            dev_panel.Controls.Add(menu_del_button);
-            dev_panel.Controls.Add(menu_pers_button);
-            dev_panel.Controls.Add(menu_game_button);
-            dev_panel.Controls.Add(panel_del);
-            dev_panel.Controls.Add(panel_pers);
-            dev_panel.Controls.Add(panel_gf);
-            dev_panel.Location = new Point(-1, 1);
-            dev_panel.Name = "dev_panel";
-            dev_panel.Size = new Size(1280, 777);
-            dev_panel.TabIndex = 1;
-            dev_panel.Visible = false;
-            // 
             // panel_sign
             // 
-            panel_sign.BackgroundImage = (Image)resources.GetObject("panel_sign.BackgroundImage");
+            panel_sign.BackgroundImage = Catalog_Project.Properties.Resources.background_signin;
             panel_sign.Controls.Add(pictureBox3);
             panel_sign.Controls.Add(sign_in);
             panel_sign.Controls.Add(password);
             panel_sign.Controls.Add(login);
-            panel_sign.Location = new Point(3, 0);
+            panel_sign.Location = new Point(3, 3);
             panel_sign.Name = "panel_sign";
-            panel_sign.Size = new Size(1280, 777);
+            panel_sign.Size = new Size(1280, 720);
             panel_sign.TabIndex = 3;
+            panel_sign.Visible = false;
             // 
             // pictureBox3
             // 
             pictureBox3.BackColor = Color.FromArgb(47, 46, 51);
-            pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
+            pictureBox3.BackgroundImage = Catalog_Project.Properties.Resources.exit;
+            pictureBox3.BackgroundImageLayout = ImageLayout.Zoom;
             pictureBox3.Location = new Point(1047, 28);
             pictureBox3.Name = "pictureBox3";
             pictureBox3.Size = new Size(179, 50);
@@ -372,7 +354,7 @@ namespace Game_Catalog_Project
             // 
             // sign_in
             // 
-            sign_in.Image = (Image)resources.GetObject("sign_in.Image");
+            sign_in.BackgroundImage = Catalog_Project.Properties.Resources.signin;
             sign_in.Location = new Point(514, 531);
             sign_in.Name = "sign_in";
             sign_in.Size = new Size(250, 52);
@@ -403,17 +385,37 @@ namespace Game_Catalog_Project
             // pictureBox5
             // 
             pictureBox5.BackColor = Color.FromArgb(47, 46, 51);
-            pictureBox5.Image = (Image)resources.GetObject("pictureBox5.Image");
-            pictureBox5.Location = new Point(40, 638);
+            pictureBox5.BackgroundImage = Catalog_Project.Properties.Resources.exit1;
+            pictureBox5.BackgroundImageLayout = ImageLayout.Zoom;
+            pictureBox5.Location = new Point(26, 615);
             pictureBox5.Name = "pictureBox5";
             pictureBox5.Size = new Size(173, 50);
             pictureBox5.TabIndex = 18;
             pictureBox5.TabStop = false;
             pictureBox5.Click += pictureBox5_Click;
             // 
+            // dev_panel
+            // 
+            dev_panel.BackgroundImage = Catalog_Project.Properties.Resources.background_main;
+            dev_panel.Controls.Add(panel_sign);
+            dev_panel.Controls.Add(pictureBox5);
+            dev_panel.Controls.Add(add_button);
+            dev_panel.Controls.Add(label_dev);
+            dev_panel.Controls.Add(menu_del_button);
+            dev_panel.Controls.Add(menu_pers_button);
+            dev_panel.Controls.Add(menu_game_button);
+            dev_panel.Controls.Add(panel_del);
+            dev_panel.Controls.Add(panel_pers);
+            dev_panel.Controls.Add(panel_gf);
+            dev_panel.Location = new Point(4, 0);
+            dev_panel.Name = "dev_panel";
+            dev_panel.Size = new Size(1280, 678);
+            dev_panel.TabIndex = 1;
+            dev_panel.Visible = false;
+            // 
             // add_button
             // 
-            add_button.Image = (Image)resources.GetObject("add_button.Image");
+            add_button.BackgroundImage = Catalog_Project.Properties.Resources.add;
             add_button.Location = new Point(1043, 34);
             add_button.Name = "add_button";
             add_button.Size = new Size(173, 43);
@@ -437,7 +439,7 @@ namespace Game_Catalog_Project
             // 
             // menu_del_button
             // 
-            menu_del_button.Image = (Image)resources.GetObject("menu_del_button.Image");
+            menu_del_button.BackgroundImage = Catalog_Project.Properties.Resources.menu_del_button;
             menu_del_button.Location = new Point(0, 261);
             menu_del_button.Name = "menu_del_button";
             menu_del_button.Size = new Size(256, 62);
@@ -449,7 +451,7 @@ namespace Game_Catalog_Project
             // 
             // menu_pers_button
             // 
-            menu_pers_button.Image = (Image)resources.GetObject("menu_pers_button.Image");
+            menu_pers_button.BackgroundImage = Catalog_Project.Properties.Resources.menu_pers_button;
             menu_pers_button.Location = new Point(0, 190);
             menu_pers_button.Name = "menu_pers_button";
             menu_pers_button.Size = new Size(256, 62);
@@ -461,7 +463,7 @@ namespace Game_Catalog_Project
             // 
             // menu_game_button
             // 
-            menu_game_button.Image = (Image)resources.GetObject("menu_game_button.Image");
+            menu_game_button.BackgroundImage = Catalog_Project.Properties.Resources.menu_gf_button;
             menu_game_button.Location = new Point(0, 119);
             menu_game_button.Name = "menu_game_button";
             menu_game_button.Size = new Size(256, 62);
@@ -508,12 +510,13 @@ namespace Game_Catalog_Project
             // 
             // pictureBox4
             // 
-            pictureBox4.Image = (Image)resources.GetObject("pictureBox4.Image");
-            pictureBox4.Location = new Point(580, 175);
+            pictureBox4.Image = Catalog_Project.Properties.Resources.search1;
+            pictureBox4.Location = new Point(580, 176);
             pictureBox4.Name = "pictureBox4";
             pictureBox4.Size = new Size(173, 43);
             pictureBox4.TabIndex = 15;
             pictureBox4.TabStop = false;
+            pictureBox4.WaitOnLoad = true;
             pictureBox4.Click += pictureBox4_Click;
             pictureBox4.MouseEnter += pictureBox4_MouseEnter;
             pictureBox4.MouseLeave += pictureBox4_MouseLeave;
@@ -609,7 +612,6 @@ namespace Game_Catalog_Project
             // 
             // check_music
             // 
-            check_music.Image = (Image)resources.GetObject("check_music.Image");
             check_music.Location = new Point(376, 747);
             check_music.Name = "check_music";
             check_music.Size = new Size(23, 23);
@@ -618,7 +620,6 @@ namespace Game_Catalog_Project
             // 
             // check_photo
             // 
-            check_photo.Image = (Image)resources.GetObject("check_photo.Image");
             check_photo.Location = new Point(376, 713);
             check_photo.Name = "check_photo";
             check_photo.Size = new Size(23, 23);
@@ -627,7 +628,6 @@ namespace Game_Catalog_Project
             // 
             // check_screenshot
             // 
-            check_screenshot.Image = (Image)resources.GetObject("check_screenshot.Image");
             check_screenshot.Location = new Point(376, 679);
             check_screenshot.Name = "check_screenshot";
             check_screenshot.Size = new Size(23, 23);
@@ -669,7 +669,6 @@ namespace Game_Catalog_Project
             // 
             // search
             // 
-            search.Image = (Image)resources.GetObject("search.Image");
             search.Location = new Point(580, 613);
             search.Name = "search";
             search.Size = new Size(173, 43);
@@ -778,7 +777,6 @@ namespace Game_Catalog_Project
             // 
             // pictureBox_logo
             // 
-            pictureBox_logo.Image = (Image)resources.GetObject("pictureBox_logo.Image");
             pictureBox_logo.Location = new Point(376, 353);
             pictureBox_logo.Name = "pictureBox_logo";
             pictureBox_logo.Size = new Size(23, 23);
@@ -798,7 +796,6 @@ namespace Game_Catalog_Project
             // 
             // search_gf
             // 
-            search_gf.Image = (Image)resources.GetObject("search_gf.Image");
             search_gf.Location = new Point(580, 287);
             search_gf.Name = "search_gf";
             search_gf.Size = new Size(173, 43);
@@ -876,7 +873,7 @@ namespace Game_Catalog_Project
             button2.BackgroundImageLayout = ImageLayout.Zoom;
             button2.FlatAppearance.BorderSize = 0;
             button2.FlatStyle = FlatStyle.Flat;
-            button2.Location = new Point(-1, 668);
+            button2.Location = new Point(4, 608);
             button2.Name = "button2";
             button2.Size = new Size(78, 61);
             button2.TabIndex = 2;
@@ -888,11 +885,11 @@ namespace Game_Catalog_Project
             AutoScaleMode = AutoScaleMode.None;
             BackgroundImage = Catalog_Project.Properties.Resources.background2;
             BackgroundImageLayout = ImageLayout.Stretch;
-            ClientSize = new Size(1264, 738);
+            ClientSize = new Size(1264, 681);
             Controls.Add(button2);
+            Controls.Add(characterInfoPanel1);
             Controls.Add(dev_panel);
             Controls.Add(SearchPanel);
-            Controls.Add(characterInfoPanel1);
             Controls.Add(backButton);
             Controls.Add(SearchButton);
             Controls.Add(SearchTextBox);
@@ -909,13 +906,13 @@ namespace Game_Catalog_Project
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             SearchPanel.ResumeLayout(false);
             SearchPanel.PerformLayout();
-            dev_panel.ResumeLayout(false);
-            dev_panel.PerformLayout();
             panel_sign.ResumeLayout(false);
             panel_sign.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ((System.ComponentModel.ISupportInitialize)sign_in).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
+            dev_panel.ResumeLayout(false);
+            dev_panel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)add_button).EndInit();
             ((System.ComponentModel.ISupportInitialize)menu_del_button).EndInit();
             ((System.ComponentModel.ISupportInitialize)menu_pers_button).EndInit();
