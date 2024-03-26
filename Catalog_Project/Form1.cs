@@ -28,6 +28,7 @@ namespace Game_Catalog_Project
 
         public window()
         {
+            
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
             //FormBorderStyle = FormBorderStyle.FixedSingle;
             DoubleBuffered = true;
@@ -37,6 +38,37 @@ namespace Game_Catalog_Project
             LoadCatalogsFromFile(); //Заменить на загрузку из БД
             setCatalogLocation();
             LoadCharactersFromFile(); //Заменить на загрузку из БД
+
+            GamesButton.Click += GamesButton_Click; FilmsButton.Click += FilmsButton_Click;
+            SearchButton.Click += SearchButton_Click; backButton.Click += BackButton_Click;
+            button1.Click += button1_Click; pictureBox3.Click += pictureBox3_Click;
+            sign_in.Click += sign_in_Click;
+            sign_in.MouseEnter += sign_in_MouseEnter;
+            sign_in.MouseLeave += sign_in_MouseLeave;
+            pictureBox5.Click += pictureBox5_Click;
+            add_button.Click += add_button_Click;
+            add_button.MouseEnter += add_button_MouseEnter;
+            add_button.MouseLeave += add_button_MouseLeave;
+            menu_del_button.Click += menu_del_button_Click;
+            menu_del_button.MouseEnter += menu_del_button_MouseEnter;
+            menu_del_button.MouseLeave += menu_del_button_MouseLeave;
+            menu_pers_button.Click += menu_pers_button_Click;
+            menu_pers_button.MouseEnter += pictureBox2_MouseEnter;
+            menu_pers_button.MouseLeave += pictureBox2_MouseLeave;
+            menu_game_button.Click += menu_game_button_Click;
+            menu_game_button.MouseEnter += menu_game_button_MouseEnter;
+            menu_game_button.MouseLeave += menu_game_button_MouseLeave;
+            pictureBox4.Click += pictureBox4_Click;
+            pictureBox4.MouseEnter += pictureBox4_MouseEnter;
+            pictureBox4.MouseLeave += pictureBox4_MouseLeave;
+            search_gf.Click += search_gf_Click;
+            search_gf.MouseEnter += search_gf_MouseEnter;
+            search_gf.MouseLeave += search_gf_MouseLeave;
+            button2.Click += button2_Click;
+            search.Click += search_Click;
+            search.MouseEnter += search_MouseEnter_1;
+            search.MouseLeave += search_MouseLeave_1;
+
         }
 
 
