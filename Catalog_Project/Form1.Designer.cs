@@ -221,7 +221,7 @@ namespace Game_Catalog_Project
             panel2.Controls.Add(text);
             panel2.Location = new Point(91, 469);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1077, 48);
+            panel2.Size = new Size(1092, 48);
             panel2.TabIndex = 7;
             // 
             // text

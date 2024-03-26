@@ -183,7 +183,7 @@ namespace Game_Catalog_Project
             text.Text = character.getBiography();
             text.Font = new Font("Segoe Print", 16.2F, FontStyle.Bold, GraphicsUnit.Point);
             text.AutoSize = true;
-            text.MaximumSize = new Size(1000, 5000);
+            text.MaximumSize = new Size(1100, 5000);
             link.Text = character.getLink();
             panel1.Location=new Point(panel1.Location.X,panel2.Location.Y+panel2.Height+10);
         }
