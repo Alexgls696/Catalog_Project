@@ -1061,6 +1061,13 @@ namespace Game_Catalog_Project
             {
                 is_authorized = true;
                 panel_sign.Visible = false;
+                restart_panel();
+                add_button.Visible = true;
+                panel_gf.Visible = true;
+                selected_button = 1;
+                restart_button();
+                menu_game_button.ImageLocation = "dev_panel/menu_gf_button_on.png";
+                label_dev.Text = "Добавление игры или фильма";
             }
         }
 
@@ -1086,6 +1093,13 @@ namespace Game_Catalog_Project
             if (is_authorized)
             {
                 panel_sign.Visible = false;
+                restart_panel();
+                add_button.Visible = true;
+                panel_gf.Visible = true;
+                selected_button = 1;
+                restart_button();
+                menu_game_button.ImageLocation = "dev_panel/menu_gf_button_on.png";
+                label_dev.Text = "Добавление игры или фильма";
             }
             else
             {
@@ -1159,6 +1173,16 @@ namespace Game_Catalog_Project
             button2.Visible = true;
             dev_panel.Visible = false;
             panel_sign.Visible = false;
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void sign_in_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

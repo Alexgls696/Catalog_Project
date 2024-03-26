@@ -59,12 +59,6 @@ namespace Game_Catalog_Project
             this.menu_del_button = new System.Windows.Forms.PictureBox();
             this.menu_pers_button = new System.Windows.Forms.PictureBox();
             this.menu_game_button = new System.Windows.Forms.PictureBox();
-            this.panel_del = new System.Windows.Forms.Panel();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
             this.panel_pers = new System.Windows.Forms.Panel();
             this.label11 = new System.Windows.Forms.Label();
             this.cb_choise = new System.Windows.Forms.ComboBox();
@@ -95,6 +89,12 @@ namespace Game_Catalog_Project
             this.label7 = new System.Windows.Forms.Label();
             this.textBox_name_gf = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.panel_del = new System.Windows.Forms.Panel();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.characterInfoPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -110,8 +110,6 @@ namespace Game_Catalog_Project
             ((System.ComponentModel.ISupportInitialize)(this.menu_del_button)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.menu_pers_button)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.menu_game_button)).BeginInit();
-            this.panel_del.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.panel_pers.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.check_music)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.check_photo)).BeginInit();
@@ -120,6 +118,8 @@ namespace Game_Catalog_Project
             this.panel_gf.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_logo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.search_gf)).BeginInit();
+            this.panel_del.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.SuspendLayout();
             // 
             // GamesButton
@@ -330,7 +330,7 @@ namespace Game_Catalog_Project
             this.panel_sign.Controls.Add(this.sign_in);
             this.panel_sign.Controls.Add(this.password);
             this.panel_sign.Controls.Add(this.login);
-            this.panel_sign.Location = new System.Drawing.Point(3, 3);
+            this.panel_sign.Location = new System.Drawing.Point(0, 0);
             this.panel_sign.Name = "panel_sign";
             this.panel_sign.Size = new System.Drawing.Size(1280, 720);
             this.panel_sign.TabIndex = 3;
@@ -355,6 +355,7 @@ namespace Game_Catalog_Project
             this.sign_in.Size = new System.Drawing.Size(250, 52);
             this.sign_in.TabIndex = 2;
             this.sign_in.TabStop = false;
+            this.sign_in.Click += new System.EventHandler(this.sign_in_Click_1);
             // 
             // password
             // 
@@ -395,9 +396,9 @@ namespace Game_Catalog_Project
             this.dev_panel.Controls.Add(this.menu_del_button);
             this.dev_panel.Controls.Add(this.menu_pers_button);
             this.dev_panel.Controls.Add(this.menu_game_button);
-            this.dev_panel.Controls.Add(this.panel_del);
             this.dev_panel.Controls.Add(this.panel_pers);
             this.dev_panel.Controls.Add(this.panel_gf);
+            this.dev_panel.Controls.Add(this.panel_del);
             this.dev_panel.Location = new System.Drawing.Point(4, 0);
             this.dev_panel.Name = "dev_panel";
             this.dev_panel.Size = new System.Drawing.Size(1280, 678);
@@ -451,73 +452,6 @@ namespace Game_Catalog_Project
             this.menu_game_button.Size = new System.Drawing.Size(256, 62);
             this.menu_game_button.TabIndex = 0;
             this.menu_game_button.TabStop = false;
-            // 
-            // panel_del
-            // 
-            this.panel_del.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel_del.Controls.Add(this.comboBox1);
-            this.panel_del.Controls.Add(this.label15);
-            this.panel_del.Controls.Add(this.pictureBox4);
-            this.panel_del.Controls.Add(this.textBox1);
-            this.panel_del.Controls.Add(this.label13);
-            this.panel_del.Location = new System.Drawing.Point(297, 116);
-            this.panel_del.Name = "panel_del";
-            this.panel_del.Size = new System.Drawing.Size(925, 588);
-            this.panel_del.TabIndex = 17;
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "Персонаж",
-            "Каталог"});
-            this.comboBox1.Location = new System.Drawing.Point(49, 72);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(381, 31);
-            this.comboBox1.TabIndex = 21;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(46)))), ((int)(((byte)(51)))));
-            this.label15.Location = new System.Drawing.Point(44, 22);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(233, 28);
-            this.label15.TabIndex = 18;
-            this.label15.Text = "Выберите объект:";
-            // 
-            // pictureBox4
-            // 
-            this.pictureBox4.Image = global::Catalog_Project.Properties.Resources.search1;
-            this.pictureBox4.Location = new System.Drawing.Point(580, 176);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(173, 43);
-            this.pictureBox4.TabIndex = 15;
-            this.pictureBox4.TabStop = false;
-            this.pictureBox4.WaitOnLoad = true;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.textBox1.Location = new System.Drawing.Point(49, 175);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(500, 43);
-            this.textBox1.TabIndex = 14;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(46)))), ((int)(((byte)(51)))));
-            this.label13.Location = new System.Drawing.Point(44, 137);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(348, 28);
-            this.label13.TabIndex = 13;
-            this.label13.Text = "Введите название объекта:";
             // 
             // panel_pers
             // 
@@ -590,6 +524,7 @@ namespace Game_Catalog_Project
             // 
             // check_music
             // 
+            this.check_music.Image = global::Catalog_Project.Properties.Resources.bad3;
             this.check_music.Location = new System.Drawing.Point(376, 747);
             this.check_music.Name = "check_music";
             this.check_music.Size = new System.Drawing.Size(23, 23);
@@ -598,6 +533,7 @@ namespace Game_Catalog_Project
             // 
             // check_photo
             // 
+            this.check_photo.Image = global::Catalog_Project.Properties.Resources.bad2;
             this.check_photo.Location = new System.Drawing.Point(376, 713);
             this.check_photo.Name = "check_photo";
             this.check_photo.Size = new System.Drawing.Size(23, 23);
@@ -606,6 +542,7 @@ namespace Game_Catalog_Project
             // 
             // check_screenshot
             // 
+            this.check_screenshot.Image = global::Catalog_Project.Properties.Resources.bad1;
             this.check_screenshot.Location = new System.Drawing.Point(376, 679);
             this.check_screenshot.Name = "check_screenshot";
             this.check_screenshot.Size = new System.Drawing.Size(23, 23);
@@ -647,6 +584,7 @@ namespace Game_Catalog_Project
             // 
             // search
             // 
+            this.search.Image = global::Catalog_Project.Properties.Resources.search2;
             this.search.Location = new System.Drawing.Point(580, 613);
             this.search.Name = "search";
             this.search.Size = new System.Drawing.Size(173, 43);
@@ -699,6 +637,7 @@ namespace Game_Catalog_Project
             this.textBox_about.Location = new System.Drawing.Point(49, 184);
             this.textBox_about.Multiline = true;
             this.textBox_about.Name = "textBox_about";
+            this.textBox_about.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox_about.Size = new System.Drawing.Size(821, 257);
             this.textBox_about.TabIndex = 3;
             // 
@@ -842,6 +781,73 @@ namespace Game_Catalog_Project
             this.label6.TabIndex = 1;
             this.label6.Text = "Введите название игры или фильма:";
             // 
+            // panel_del
+            // 
+            this.panel_del.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel_del.Controls.Add(this.comboBox1);
+            this.panel_del.Controls.Add(this.label15);
+            this.panel_del.Controls.Add(this.pictureBox4);
+            this.panel_del.Controls.Add(this.textBox1);
+            this.panel_del.Controls.Add(this.label13);
+            this.panel_del.Location = new System.Drawing.Point(297, 116);
+            this.panel_del.Name = "panel_del";
+            this.panel_del.Size = new System.Drawing.Size(925, 588);
+            this.panel_del.TabIndex = 17;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Персонаж",
+            "Каталог"});
+            this.comboBox1.Location = new System.Drawing.Point(49, 72);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(381, 31);
+            this.comboBox1.TabIndex = 21;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(46)))), ((int)(((byte)(51)))));
+            this.label15.Location = new System.Drawing.Point(44, 22);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(233, 28);
+            this.label15.TabIndex = 18;
+            this.label15.Text = "Выберите объект:";
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.Image = global::Catalog_Project.Properties.Resources.search1;
+            this.pictureBox4.Location = new System.Drawing.Point(580, 176);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(173, 43);
+            this.pictureBox4.TabIndex = 15;
+            this.pictureBox4.TabStop = false;
+            this.pictureBox4.WaitOnLoad = true;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.textBox1.Location = new System.Drawing.Point(49, 175);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(500, 43);
+            this.textBox1.TabIndex = 14;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(46)))), ((int)(((byte)(51)))));
+            this.label13.Location = new System.Drawing.Point(44, 137);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(348, 28);
+            this.label13.TabIndex = 13;
+            this.label13.Text = "Введите название объекта:";
+            // 
             // button2
             // 
             this.button2.BackColor = System.Drawing.Color.Transparent;
@@ -854,6 +860,7 @@ namespace Game_Catalog_Project
             this.button2.Size = new System.Drawing.Size(78, 61);
             this.button2.TabIndex = 2;
             this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click_1);
             // 
             // window
             // 
@@ -892,9 +899,6 @@ namespace Game_Catalog_Project
             ((System.ComponentModel.ISupportInitialize)(this.menu_del_button)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.menu_pers_button)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.menu_game_button)).EndInit();
-            this.panel_del.ResumeLayout(false);
-            this.panel_del.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             this.panel_pers.ResumeLayout(false);
             this.panel_pers.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.check_music)).EndInit();
@@ -905,6 +909,9 @@ namespace Game_Catalog_Project
             this.panel_gf.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_logo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.search_gf)).EndInit();
+            this.panel_del.ResumeLayout(false);
+            this.panel_del.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

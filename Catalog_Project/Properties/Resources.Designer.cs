@@ -123,6 +123,36 @@ namespace Catalog_Project.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap bad1 {
+            get {
+                object obj = ResourceManager.GetObject("bad1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap bad2 {
+            get {
+                object obj = ResourceManager.GetObject("bad2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap bad3 {
+            get {
+                object obj = ResourceManager.GetObject("bad3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap dev {
             get {
                 object obj = ResourceManager.GetObject("dev", resourceCulture);
@@ -216,6 +246,16 @@ namespace Catalog_Project.Properties {
         internal static System.Drawing.Bitmap search1 {
             get {
                 object obj = ResourceManager.GetObject("search1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap search2 {
+            get {
+                object obj = ResourceManager.GetObject("search2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
