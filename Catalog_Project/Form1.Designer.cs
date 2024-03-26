@@ -37,10 +37,11 @@ namespace Game_Catalog_Project
             SearchButton = new Button();
             backButton = new Button();
             characterInfoPanel1 = new myPanel();
-            panel1 = new myLayoutPanel();
+            panel2 = new Panel();
             text = new Label();
-            ist = new Label();
+            panel1 = new myPanel();
             link = new Label();
+            ist = new Label();
             button1 = new Button();
             label1 = new Label();
             pictureBox2 = new PictureBox();
@@ -97,6 +98,7 @@ namespace Game_Catalog_Project
             label13 = new Label();
             button2 = new Button();
             characterInfoPanel1.SuspendLayout();
+            panel2.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -200,63 +202,72 @@ namespace Game_Catalog_Project
             // 
             characterInfoPanel1.AutoScroll = true;
             characterInfoPanel1.BackColor = Color.Transparent;
+            characterInfoPanel1.Controls.Add(panel2);
             characterInfoPanel1.Controls.Add(panel1);
             characterInfoPanel1.Controls.Add(button1);
             characterInfoPanel1.Controls.Add(label1);
             characterInfoPanel1.Controls.Add(pictureBox2);
             characterInfoPanel1.Controls.Add(pictureBox1);
-            characterInfoPanel1.Location = new Point(1258, 11);
-            characterInfoPanel1.MaximumSize = new Size(1260, 720);
+            characterInfoPanel1.Location = new Point(4, 70);
+            characterInfoPanel1.MaximumSize = new Size(1260, 678);
             characterInfoPanel1.Name = "characterInfoPanel1";
-            characterInfoPanel1.Size = new Size(1260, 635);
+            characterInfoPanel1.Size = new Size(1257, 606);
             characterInfoPanel1.TabIndex = 0;
             characterInfoPanel1.Visible = false;
             // 
-            // panel1
+            // panel2
             // 
-            panel1.AutoSize = true;
-            panel1.Controls.Add(text);
-            panel1.Controls.Add(ist);
-            panel1.Controls.Add(link);
-            panel1.Location = new Point(88, 556);
-            panel1.MaximumSize = new Size(1200, 2000);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(1111, 99);
-            panel1.TabIndex = 4;
+            panel2.AutoSize = true;
+            panel2.Controls.Add(text);
+            panel2.Location = new Point(91, 469);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(1077, 48);
+            panel2.TabIndex = 7;
             // 
             // text
             // 
             text.AutoSize = true;
             text.Font = new Font("Segoe Print", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
             text.ForeColor = SystemColors.Control;
-            text.Location = new Point(3, 0);
+            text.Location = new Point(-7, 11);
+            text.Margin = new Padding(3, 0, 5, 0);
             text.Name = "text";
             text.Size = new Size(79, 37);
             text.TabIndex = 0;
             text.Text = "label2";
             // 
-            // ist
+            // panel1
             // 
-            ist.AutoSize = true;
-            ist.Font = new Font("Segoe Print", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
-            ist.ForeColor = Color.White;
-            ist.Location = new Point(485, 0);
-            ist.Margin = new Padding(400, 0, 3, 0);
-            ist.Name = "ist";
-            ist.Size = new Size(123, 33);
-            ist.TabIndex = 5;
-            ist.Text = "Источник:";
+            panel1.AutoSize = true;
+            panel1.Controls.Add(link);
+            panel1.Controls.Add(ist);
+            panel1.Location = new Point(91, 525);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(1100, 58);
+            panel1.TabIndex = 4;
             // 
             // link
             // 
             link.AutoSize = true;
             link.Font = new Font("Segoe Print", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
             link.ForeColor = Color.Gold;
-            link.Location = new Point(614, 0);
+            link.Location = new Point(166, 11);
             link.Name = "link";
             link.Size = new Size(96, 37);
             link.TabIndex = 6;
             link.Text = "Ссылка";
+            // 
+            // ist
+            // 
+            ist.AutoSize = true;
+            ist.Font = new Font("Segoe Print", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
+            ist.ForeColor = SystemColors.Control;
+            ist.Location = new Point(0, 14);
+            ist.Margin = new Padding(0, 0, 3, 0);
+            ist.Name = "ist";
+            ist.Size = new Size(123, 33);
+            ist.TabIndex = 5;
+            ist.Text = "Источник:";
             // 
             // button1
             // 
@@ -264,9 +275,9 @@ namespace Game_Catalog_Project
             button1.FlatStyle = FlatStyle.Flat;
             button1.Font = new Font("Segoe Print", 18F, FontStyle.Bold, GraphicsUnit.Point);
             button1.ForeColor = SystemColors.ButtonHighlight;
-            button1.Location = new Point(88, 476);
+            button1.Location = new Point(91, 401);
             button1.Name = "button1";
-            button1.Size = new Size(295, 62);
+            button1.Size = new Size(280, 62);
             button1.TabIndex = 3;
             button1.Text = "Фраза";
             button1.UseVisualStyleBackColor = false;
@@ -276,7 +287,7 @@ namespace Game_Catalog_Project
             label1.AutoSize = true;
             label1.Font = new Font("Segoe Print", 20.25F, FontStyle.Bold, GraphicsUnit.Point);
             label1.ForeColor = SystemColors.ButtonFace;
-            label1.Location = new Point(160, 427);
+            label1.Location = new Point(184, 325);
             label1.Name = "label1";
             label1.Size = new Size(83, 47);
             label1.TabIndex = 2;
@@ -288,7 +299,7 @@ namespace Game_Catalog_Project
             pictureBox2.BackgroundImageLayout = ImageLayout.Stretch;
             pictureBox2.Location = new Point(474, 42);
             pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(714, 496);
+            pictureBox2.Size = new Size(709, 421);
             pictureBox2.TabIndex = 1;
             pictureBox2.TabStop = false;
             // 
@@ -297,7 +308,7 @@ namespace Game_Catalog_Project
             pictureBox1.BackgroundImageLayout = ImageLayout.Stretch;
             pictureBox1.Location = new Point(88, 42);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(295, 382);
+            pictureBox1.Size = new Size(280, 280);
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
@@ -330,7 +341,7 @@ namespace Game_Catalog_Project
             panel_sign.Controls.Add(sign_in);
             panel_sign.Controls.Add(password);
             panel_sign.Controls.Add(login);
-            panel_sign.Location = new Point(1, 0);
+            panel_sign.Location = new Point(3, 28);
             panel_sign.Name = "panel_sign";
             panel_sign.Size = new Size(1280, 720);
             panel_sign.TabIndex = 3;
@@ -389,6 +400,7 @@ namespace Game_Catalog_Project
             // dev_panel
             // 
             dev_panel.BackgroundImage = Catalog_Project.Properties.Resources.background_main;
+            dev_panel.Controls.Add(panel_sign);
             dev_panel.Controls.Add(pictureBox5);
             dev_panel.Controls.Add(add_button);
             dev_panel.Controls.Add(label_dev);
@@ -398,7 +410,7 @@ namespace Game_Catalog_Project
             dev_panel.Controls.Add(panel_pers);
             dev_panel.Controls.Add(panel_gf);
             dev_panel.Controls.Add(panel_del);
-            dev_panel.Location = new Point(4, 0);
+            dev_panel.Location = new Point(1036, 11);
             dev_panel.Name = "dev_panel";
             dev_panel.Size = new Size(1280, 678);
             dev_panel.TabIndex = 1;
@@ -864,10 +876,9 @@ namespace Game_Catalog_Project
             BackgroundImage = Catalog_Project.Properties.Resources.background2;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1264, 681);
-            Controls.Add(panel_sign);
             Controls.Add(button2);
-            Controls.Add(characterInfoPanel1);
             Controls.Add(dev_panel);
+            Controls.Add(characterInfoPanel1);
             Controls.Add(SearchPanel);
             Controls.Add(backButton);
             Controls.Add(SearchButton);
@@ -879,6 +890,8 @@ namespace Game_Catalog_Project
             Name = "window";
             characterInfoPanel1.ResumeLayout(false);
             characterInfoPanel1.PerformLayout();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
@@ -922,7 +935,7 @@ namespace Game_Catalog_Project
         private PictureBox pictureBox1;
         private Button button1;
         private Label label1;
-        private myLayoutPanel panel1;
+        private myPanel panel1;
         private Label text;
         private myPanel characterInfoPanel1;
         private Label link;
@@ -978,5 +991,6 @@ namespace Game_Catalog_Project
         private ComboBox comboBox1;
         private Label label15;
         private PictureBox pictureBox3;
+        private Panel panel2;
     }
 }

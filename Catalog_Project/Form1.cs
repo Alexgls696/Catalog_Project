@@ -30,7 +30,7 @@ namespace Game_Catalog_Project
         {
             
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
+           // FormBorderStyle = FormBorderStyle.FixedSingle;
             DoubleBuffered = true;
             InitializeComponent();
             PanelsInit();
@@ -183,8 +183,9 @@ namespace Game_Catalog_Project
             text.Text = character.getBiography();
             text.Font = new Font("Segoe Print", 16.2F, FontStyle.Bold, GraphicsUnit.Point);
             text.AutoSize = true;
-            text.MaximumSize = new Size(1000, 2000);
+            text.MaximumSize = new Size(1000, 5000);
             link.Text = character.getLink();
+            panel1.Location=new Point(panel1.Location.X,panel2.Location.Y+panel2.Height+10);
         }
 
         private List<Character> SortCharacters(List<Character> catalog)
