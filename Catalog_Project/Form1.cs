@@ -30,14 +30,14 @@ namespace Game_Catalog_Project
         {
             
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
-            //FormBorderStyle = FormBorderStyle.FixedSingle;
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             DoubleBuffered = true;
             InitializeComponent();
             PanelsInit();
             Controls.Add(backButton);
-            LoadCatalogsFromFile(); //Заменить на загрузку из БД
+            LoadCatalogsFromFile(); 
             setCatalogLocation();
-            LoadCharactersFromFile(); //Заменить на загрузку из БД
+            LoadCharactersFromFile(); 
 
             GamesButton.Click += GamesButton_Click; FilmsButton.Click += FilmsButton_Click;
             SearchButton.Click += SearchButton_Click; backButton.Click += BackButton_Click;
@@ -68,45 +68,10 @@ namespace Game_Catalog_Project
             search.Click += search_Click;
             search.MouseEnter += search_MouseEnter_1;
             search.MouseLeave += search_MouseLeave_1;
-
-        }
-
-
-        private void setCharacterInfo(string path) //Устанавливает инфу о каждом персонаже из файла
-        {
-            Character character = new Character();
-            StreamReader name_reader = new StreamReader(path + "name.txt");
-            string name = name_reader.ReadLine();
-            name_reader.Close();
-
-            StreamReader opis_reader = new StreamReader(path + "opis.txt");
-
-            StringBuilder builder = new StringBuilder();
-            while (!opis_reader.EndOfStream)
-            {
-                builder.Append(opis_reader.ReadLine());
-            }
-            opis_reader.Close();
-
-            StreamReader parent_reader = new StreamReader(path + "parent_name.txt");
-            string parent = parent_reader.ReadLine();
-            parent_reader.Close();
-
-            StreamReader link_reader = new StreamReader(path + "link.txt");
-            string link = link_reader.ReadLine();
-
-            string icon = path + "icon.png";
-            string screen = path + "screen.jpeg";
-            string sound = path + "sound.mp3";
-
-            character.setName(name);
-            character.setLink(link);
-            character.setBiography(builder.ToString());
-            character.setParentName(parent);
-            character.setPhoto(icon);
-            character.setScreen(screen);
-            character.setSound(sound);
-            characters.Add(character);
+            pictureBox_logo.Location = new Point(label_logo.Location.X + label_logo.Size.Width + 10, pictureBox_logo.Location.Y);
+            check_music.Location=new Point(label_screenshot.Location.X + label_screenshot.Size.Width + 10, check_music.Location.Y);
+            check_screenshot.Location = new Point(label_screenshot.Location.X + label_screenshot.Size.Width + 10, check_screenshot.Location.Y);
+            check_photo.Location = new Point(label_screenshot.Location.X + label_screenshot.Size.Width + 10, check_photo.Location.Y);
         }
         public void LoadCharactersFromFile() //Загрузка персов в лист
                                              //Здесь должен быть получен файл со списком персонажей из БД.
@@ -121,7 +86,6 @@ namespace Game_Catalog_Project
 
                 while (reader.Read())
                 {
-
                     string name = reader.GetString(0);
                     string link = reader.GetString(1);
                     string biography = reader.GetString(2);
@@ -132,6 +96,7 @@ namespace Game_Catalog_Project
                     Character character = new Character(name, biography, link, parent_name, photo_path, screen, sound);
                     characters.Add(character);
                 }
+                characters=SortCharacters(characters);
                 connection.Close();
             }
         }
@@ -150,7 +115,7 @@ namespace Game_Catalog_Project
                     button.Size = new Size(250, 250);
                     button.Location = new Point(moveX + 50, moveY + 50);
                     //------------------------------------------------------------------------------------
-                    button.BackgroundImage = setCurrentPhoto(characters[i].Photo(), i);
+                    button.BackgroundImage = new Bitmap(characters[i].Photo());
                     //выбор верного формата фото, нужно без бд. Т.к в БД будет лежать верное значение сразу
 
                     button.BackColor = Color.Transparent;
@@ -176,102 +141,6 @@ namespace Game_Catalog_Project
                     CharactersPanel.Controls.Add(button);
                 }
             }
-        }
-        private Bitmap setCurrentPhoto(string Folder, int index)
-        //выбор верного формата фото, нужно без бд. Т.к в БД будет лежать верное значение сразу
-        {
-            Bitmap bitmap = null;
-            try
-            {
-                bitmap = new Bitmap(characters[index].Photo());
-            }
-            catch (Exception e)
-            {
-                try
-                {
-                    string folder = characters[index].Photo();
-                    for (int j = folder.Length - 1; j >= 0; j--)
-                    {
-                        if (folder[j] == '.')
-                        {
-                            folder = folder.Remove(j);
-                            folder += ".jpg";
-                            bitmap = new Bitmap(folder);
-                            break;
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    try
-                    {
-                        string folder = characters[index].Photo();
-                        for (int j = folder.Length - 1; j >= 0; j--)
-                        {
-                            if (folder[j] == '.')
-                            {
-                                folder = folder.Remove(j);
-                                folder += ".png";
-                                bitmap = new Bitmap(folder);
-                                break;
-                            }
-                        }
-                    }
-                    catch (Exception ex1)
-                    {
-                        throw ex1;
-                    }
-                }
-            }
-            return bitmap;
-        }
-        private Bitmap setCurrentScreen(string Folder, int index)
-        //выбор верного формата скрина, нужно без бд. Т.к в БД будет лежать верное значение сразу
-        {
-            Bitmap bitmap = null;
-            try
-            {
-                bitmap = new Bitmap(characters[index].Screen());
-            }
-            catch (Exception e)
-            {
-                try
-                {
-                    string folder = characters[index].Screen();
-                    for (int j = folder.Length - 1; j >= 0; j--)
-                    {
-                        if (folder[j] == '.')
-                        {
-                            folder = folder.Remove(j);
-                            folder += ".jpg";
-                            bitmap = new Bitmap(folder);
-                            break;
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    try
-                    {
-                        string folder = characters[index].Screen();
-                        for (int j = folder.Length - 1; j >= 0; j--)
-                        {
-                            if (folder[j] == '.')
-                            {
-                                folder = folder.Remove(j);
-                                folder += ".png";
-                                bitmap = new Bitmap(folder);
-                                break;
-                            }
-                        }
-                    }
-                    catch (Exception ex1)
-                    {
-                        throw ex1;
-                    }
-                }
-            }
-            return bitmap;
         }
         private void current_character_panel_click(object? sender, EventArgs e) //Клик на персонажа
         {
@@ -306,8 +175,8 @@ namespace Game_Catalog_Project
                     character = characters[i]; current_index = i; break;
                 }
             }
-            pictureBox1.BackgroundImage = setCurrentPhoto(character.Photo(), current_index);
-            pictureBox2.BackgroundImage = setCurrentScreen(character.Screen(), current_index);
+            pictureBox1.BackgroundImage = new Bitmap(character.Photo());
+            pictureBox2.BackgroundImage = new Bitmap(character.Screen());
             label1.Text = character.getName();
             label1.ForeColor = Color.White;
 
@@ -364,7 +233,6 @@ namespace Game_Catalog_Project
             int moveX = 0;
             int moveY = 0;
             myPanel panel = null;
-
             location[] locations = new location[2]; //Добавить больше, если будет больше каталогов
             int current_index = 0;
             //игры - 0 индекс, фильмы - 1 индекс
@@ -422,6 +290,7 @@ namespace Game_Catalog_Project
                     Catalog game = new Catalog(icon_path, name, type);
                     catalogs.Add(game);
                 }
+                catalogs=SortCatalogs(catalogs);
                 connection.Close();
             }
         }
@@ -607,9 +476,8 @@ namespace Game_Catalog_Project
                     button.Size = new Size(250, 250);
                     button.Location = new Point(moveX + 50, moveY + 50);
                     //------------------------------------------------------------------------------------
-                    button.BackgroundImage = setCurrentPhoto(characters[i].Photo(), i);
+                    button.BackgroundImage = new Bitmap(characters[i].Photo());
                     //выбор верного формата фото, нужно без бд. Т.к в БД будет лежать верное значение сразу
-
                     button.BackColor = Color.Transparent;
                     button.BackgroundImageLayout = ImageLayout.Zoom;
                     button.FlatAppearance.BorderSize = 0;
