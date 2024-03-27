@@ -263,12 +263,15 @@ namespace Game_Catalog_Project
                 button.Name = catalogs[i].getName();
                 button.Click += CharactersClick;
                 panel.Controls.Add(button);
+                locations[current_index].count++;
                 locations[current_index].moveX += 300;
-                if ((locations[current_index].count + 1) % 4 == 0)
+                if (locations[current_index].count==4)
                 {
                     locations[current_index].moveX = 0;
                     locations[current_index].moveY += 300;
+                    locations[current_index].count = 0;
                 }
+                
             }
         }
 
@@ -414,6 +417,7 @@ namespace Game_Catalog_Project
             filmsCatalogPanel.BackColor = Color.White;
             filmsCatalogPanel.BackColor = Color.Transparent;
             filmsCatalogPanel.AutoScroll = true;
+            filmsCatalogPanel.MaximumSize = new Size(1280, 3000);
 
             CharactersPanel = new myPanel();
             CharactersPanel.Location = new Point(0, 70);
@@ -469,6 +473,7 @@ namespace Game_Catalog_Project
             }
             int moveX = 0;
             int moveY = 50;
+            int count = 0;
             for (int i = 0; i < characters.Count; i++)
             {
                 if (characters[i].getName().ToLower().Contains(search_str.ToLower()))
@@ -492,10 +497,12 @@ namespace Game_Catalog_Project
                     button.Click += current_character_in_search_click;
                     gameCatalogPanel.Controls.Add(button);
                     moveX += 300;
-                    if ((i + 1) % 4 == 0)
+                    count++;
+                    if ((count) % 4 == 0)
                     {
                         moveX = 0;
                         moveY += 300;
+                        count = 0;
                     }
                     Label label = new Label();
                     SearchPanel.Controls.Add(button);
